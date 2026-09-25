@@ -1,7 +1,7 @@
-import { useDesktop } from 'deskui';
+import { useDesktop } from 'xbdesk';
 
-const SNIPPET = `import { Desktop, createSettingsApp } from 'deskui';
-import 'deskui/style.css';
+const SNIPPET = `import { Desktop, createSettingsApp } from 'xbdesk';
+import 'xbdesk/style.css';
 
 const apps = [
   createSettingsApp({ title: 'Ayarlar' }),
@@ -20,19 +20,19 @@ export function WelcomeApp() {
   const api = useDesktop();
   return (
     <div className="demo-welcome">
-      <h1>deskui'ye hoş geldiniz</h1>
+      <h1>xBDesk'e hoş geldiniz</h1>
       <p className="demo-welcome__lead">
         React projeleri için Linux masaüstü tarzı arayüz kiti: pencere yöneticisi, masaüstü simgeleri, panel, uygulama menüsü, saat, bildirimler,
         çalışma alanları, duvar kağıdı ve tema — hepsi tek bileşenle.
       </p>
       <div className="demo-welcome__actions">
-        <button type="button" className="dui-button dui-button--primary" onClick={() => api.openApp('settings', { section: 'background' })}>
+        <button type="button" className="xbd-button xbd-button--primary" onClick={() => api.openApp('settings', { section: 'background' })}>
           Duvar kağıdını değiştir
         </button>
-        <button type="button" className="dui-button" onClick={() => api.openApp('terminal')}>
+        <button type="button" className="xbd-button" onClick={() => api.openApp('terminal')}>
           Terminali aç
         </button>
-        <button type="button" className="dui-button" onClick={() => api.notify({ title: 'Merhaba 👋', body: 'Bu bir masaüstü bildirimi.', actions: [{ label: 'Dosyaları aç', onClick: () => api.openApp('files') }] })}>
+        <button type="button" className="xbd-button" onClick={() => api.notify({ title: 'Merhaba 👋', body: 'Bu bir masaüstü bildirimi.', actions: [{ label: 'Dosyaları aç', onClick: () => api.openApp('files') }] })}>
           Bildirim gönder
         </button>
       </div>

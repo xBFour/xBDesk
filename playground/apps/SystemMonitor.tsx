@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useDesktopState } from 'deskui';
+import { useDesktopState } from 'xbdesk';
 
 // Gerçek tarayıcı ölçümleri: FPS, DOM düğümü sayısı, JS heap (Chromium), açık pencereler.
 
@@ -60,7 +60,7 @@ export function SystemMonitorApp() {
           <span>Kare hızı</span>
           <strong>{lastOf(fps)} FPS</strong>
         </div>
-        <Sparkline values={fps} max={Math.max(60, ...fps)} color="var(--dui-accent)" />
+        <Sparkline values={fps} max={Math.max(60, ...fps)} color="var(--xbd-accent)" />
       </div>
       <div className="demo-mon__card">
         <div className="demo-mon__head">

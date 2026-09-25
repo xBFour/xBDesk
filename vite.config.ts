@@ -1,15 +1,15 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Kütüphane derlemesi: dist/deskui.{js,cjs} + dist/style.css
+// Kütüphane derlemesi: dist/xbdesk.{js,cjs} + dist/style.css
 export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
       entry: 'src/index.ts',
-      name: 'DeskUI',
+      name: 'XBDesk',
       formats: ['es', 'cjs'],
-      fileName: (format) => (format === 'es' ? 'deskui.js' : 'deskui.cjs'),
+      fileName: (format) => (format === 'es' ? 'xbdesk.js' : 'xbdesk.cjs'),
       cssFileName: 'style',
     },
     emptyOutDir: false,

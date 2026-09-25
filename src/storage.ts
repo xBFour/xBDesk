@@ -16,7 +16,7 @@ export function localStorageAdapter(key: string): DesktopStorage {
         localStorage.setItem(key, JSON.stringify(preferences));
       } catch (err) {
         // Quota exceeded (e.g. a large uploaded wallpaper) or storage disabled.
-        console.warn('[deskui] Could not persist preferences:', err);
+        console.warn('[xBDesk] Could not persist preferences:', err);
       }
     },
   };

@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [react(), ...(mode === 'singlefile' ? [viteSingleFile()] : [])],
   resolve: {
     alias: {
-      deskui: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+      xbdesk: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
     },
   },
   server: { host: '0.0.0.0', port: 5180 },

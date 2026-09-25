@@ -90,7 +90,7 @@ export function CalculatorApp() {
     e.preventDefault();
   };
   useEffect(() => {
-    const el = rootRef.current?.closest('.dui-window');
+    const el = rootRef.current?.closest('.xbd-window');
     if (!el) return;
     const onKey = (e: Event) => handlers.current(e as KeyboardEvent);
     el.addEventListener('keydown', onKey);

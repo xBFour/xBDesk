@@ -55,7 +55,7 @@ export function Popover({ anchorRef, edge, onClose, children, className, align =
     const onDown = (e: PointerEvent) => {
       const t = e.target as Node;
       if (ref.current?.contains(t) || anchorRef.current?.contains(t)) return;
-      if (t instanceof Element && t.closest('[data-dui-menu]')) return;
+      if (t instanceof Element && t.closest('[data-xbd-menu]')) return;
       onClose();
     };
     const onKey = (e: KeyboardEvent) => {
@@ -78,7 +78,7 @@ export function Popover({ anchorRef, edge, onClose, children, className, align =
       ref={ref}
       role="dialog"
       aria-label={label}
-      className={cx('dui-popover', `dui-popover--from-${edge}`, className)}
+      className={cx('xbd-popover', `xbd-popover--from-${edge}`, className)}
       style={{ left: pos?.left ?? 0, top: pos?.top ?? 0, opacity: pos ? undefined : 0, pointerEvents: pos ? undefined : 'none' }}
     >
       {children}

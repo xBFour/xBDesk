@@ -67,7 +67,7 @@ export function AppMenu({ onLaunch }: AppMenuProps) {
     else if (e.key === 'ArrowUp') {
       if (active < COLUMNS) {
         e.preventDefault();
-        (e.currentTarget.closest('.dui-app-menu')?.querySelector('input') as HTMLInputElement | null)?.focus();
+        (e.currentTarget.closest('.xbd-app-menu')?.querySelector('input') as HTMLInputElement | null)?.focus();
         return;
       }
       next = active - COLUMNS;
@@ -77,8 +77,8 @@ export function AppMenu({ onLaunch }: AppMenuProps) {
   };
 
   return (
-    <div className="dui-app-menu">
-      <label className="dui-app-menu__search">
+    <div className="xbd-app-menu">
+      <label className="xbd-app-menu__search">
         <SearchIcon />
         <input
           autoFocus
@@ -101,20 +101,20 @@ export function AppMenu({ onLaunch }: AppMenuProps) {
           }}
         />
       </label>
-      <div className="dui-app-menu__main">
+      <div className="xbd-app-menu__main">
         {categories.length > 0 && !query && (
-          <nav className="dui-app-menu__categories" aria-label={labels.applications}>
-            <button type="button" className={cx('dui-app-menu__category', category === null && 'is-active')} onClick={() => setCategory(null)}>
+          <nav className="xbd-app-menu__categories" aria-label={labels.applications}>
+            <button type="button" className={cx('xbd-app-menu__category', category === null && 'is-active')} onClick={() => setCategory(null)}>
               {labels.allApplications}
             </button>
             {categories.map((c) => (
-              <button key={c} type="button" className={cx('dui-app-menu__category', category === c && 'is-active')} onClick={() => setCategory(c)}>
+              <button key={c} type="button" className={cx('xbd-app-menu__category', category === c && 'is-active')} onClick={() => setCategory(c)}>
                 {c}
               </button>
             ))}
           </nav>
         )}
-        <div ref={gridRef} className="dui-app-menu__grid" role="listbox" aria-label={labels.applications} onKeyDown={onGridKeyDown}>
+        <div ref={gridRef} className="xbd-app-menu__grid" role="listbox" aria-label={labels.applications} onKeyDown={onGridKeyDown}>
           {results.map((app, i) => (
             <button
               key={app.id}
@@ -122,7 +122,7 @@ export function AppMenu({ onLaunch }: AppMenuProps) {
               role="option"
               aria-selected={i === active}
               tabIndex={i === active ? 0 : -1}
-              className={cx('dui-app-menu__app', i === active && 'is-active')}
+              className={cx('xbd-app-menu__app', i === active && 'is-active')}
               title={app.description ?? app.title}
               onClick={() => launch(app)}
               onPointerEnter={() => setActive(i)}
@@ -131,7 +131,7 @@ export function AppMenu({ onLaunch }: AppMenuProps) {
               <span>{app.title}</span>
             </button>
           ))}
-          {!results.length && <p className="dui-app-menu__empty">{labels.noResults}</p>}
+          {!results.length && <p className="xbd-app-menu__empty">{labels.noResults}</p>}
         </div>
       </div>
     </div>
@@ -151,12 +151,12 @@ export function AppMenuButton({ icon, label, showLabel = false }: AppMenuButtonP
   const text = label ?? labels.applications;
   return (
     <PanelPopoverButton
-      className="dui-app-menu-button"
+      className="xbd-app-menu-button"
       icon={icon ?? <AppsIcon />}
       label={showLabel && !vertical ? text : undefined}
       title={text}
       aria-label={text}
-      popoverClassName="dui-popover--app-menu"
+      popoverClassName="xbd-popover--app-menu"
       content={(close) => <AppMenu onLaunch={close} />}
     />
   );

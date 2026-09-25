@@ -22,7 +22,7 @@ const root: FsNode = dir('', [
       dir('Belgeler', [
         file(
           'yol-haritasi.md',
-          `# deskui yol haritası
+          `# xBDesk yol haritası
 
 - [x] Pencere yöneticisi (taşı, boyutlandır, kenara yasla)
 - [x] Masaüstü simgeleri, çoklu seçim, sürükle-bırak
@@ -38,11 +38,11 @@ const root: FsNode = dir('', [
         dir('Faturalar', [file('2026-09.txt', 'Eylül faturaları burada listelenecek.\n')]),
       ]),
       dir('Resimler', [file('tatil.jpg'), file('ekran-goruntusu.png'), file('logo.svg')]),
-      dir('İndirilenler', [file('kurulum.sh', '#!/bin/sh\necho "deskui kuruluyor..."\nnpm install deskui\n')]),
+      dir('İndirilenler', [file('kurulum.sh', '#!/bin/sh\necho "xBDesk kuruluyor..."\nnpm install xbdesk\n')]),
       dir('Müzik'),
       file('beni-oku.txt', `Merhaba!
 
-Bu dosya deskui demo'sundaki sahte dosya sisteminden geliyor.
+Bu dosya xBDesk demo'sundaki sahte dosya sisteminden geliyor.
 Düzenleyip Ctrl+S ile kaydedebilirsiniz; değişiklikler sayfa açık kaldıkça durur.
 
 İpucu: Terminal'de "help" yazın.

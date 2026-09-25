@@ -17,7 +17,7 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "deskui": ["src/index.ts"]
+      "xbdesk": ["src/index.ts"]
     }
   },
   "include": ["src", "playground", "vite.config.ts", "vite.playground.config.ts"]

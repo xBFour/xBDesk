@@ -61,25 +61,25 @@ export function Calendar({ locale: localeProp, className }: CalendarProps) {
   const shift = (n: number) => setCursor((c) => new Date(c.getFullYear(), c.getMonth() + n, 1));
 
   return (
-    <div className={cx('dui-calendar', className)}>
-      <div className="dui-calendar__today">
+    <div className={cx('xbd-calendar', className)}>
+      <div className="xbd-calendar__today">
         <span>{new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(today)}</span>
         <strong>{new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(today)}</strong>
       </div>
-      <div className="dui-calendar__header">
-        <button type="button" className="dui-icon-button" onClick={() => shift(-1)} aria-label={config.labels.previousMonth} title={config.labels.previousMonth}>
+      <div className="xbd-calendar__header">
+        <button type="button" className="xbd-icon-button" onClick={() => shift(-1)} aria-label={config.labels.previousMonth} title={config.labels.previousMonth}>
           <ChevronLeftIcon />
         </button>
-        <button type="button" className="dui-calendar__month" onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))} title={config.labels.today}>
+        <button type="button" className="xbd-calendar__month" onClick={() => setCursor(new Date(today.getFullYear(), today.getMonth(), 1))} title={config.labels.today}>
           {monthTitle}
         </button>
-        <button type="button" className="dui-icon-button" onClick={() => shift(1)} aria-label={config.labels.nextMonth} title={config.labels.nextMonth}>
+        <button type="button" className="xbd-icon-button" onClick={() => shift(1)} aria-label={config.labels.nextMonth} title={config.labels.nextMonth}>
           <ChevronRightIcon />
         </button>
       </div>
-      <div className="dui-calendar__grid" role="grid" aria-label={monthTitle}>
+      <div className="xbd-calendar__grid" role="grid" aria-label={monthTitle}>
         {weekdays.map((d) => (
-          <span key={d} className="dui-calendar__weekday" role="columnheader">
+          <span key={d} className="xbd-calendar__weekday" role="columnheader">
             {d}
           </span>
         ))}
@@ -87,7 +87,7 @@ export function Calendar({ locale: localeProp, className }: CalendarProps) {
           <span
             key={d.toISOString()}
             role="gridcell"
-            className={cx('dui-calendar__day', d.getMonth() !== cursor.getMonth() && 'is-outside', sameDay(d, today) && 'is-today')}
+            className={cx('xbd-calendar__day', d.getMonth() !== cursor.getMonth() && 'is-outside', sameDay(d, today) && 'is-today')}
             aria-current={sameDay(d, today) ? 'date' : undefined}
           >
             {d.getDate()}
@@ -121,17 +121,17 @@ export function Clock({ showDate = false, showSeconds = false, hour12, timeForma
   const full = new Intl.DateTimeFormat(locale, { dateStyle: 'full', timeStyle: 'short' }).format(now);
 
   const face = (
-    <span className={cx('dui-clock', (showDate || vertical) && 'dui-clock--stacked')}>
-      <time dateTime={now.toISOString()} className="dui-clock__time">
+    <span className={cx('xbd-clock', (showDate || vertical) && 'xbd-clock--stacked')}>
+      <time dateTime={now.toISOString()} className="xbd-clock__time">
         {time}
       </time>
-      {showDate && <span className="dui-clock__date">{date}</span>}
+      {showDate && <span className="xbd-clock__date">{date}</span>}
     </span>
   );
 
   if (!calendar) return <PanelButton title={full} aria-label={full}>{face}</PanelButton>;
   return (
-    <PanelPopoverButton title={full} aria-label={full} align="end" popoverClassName="dui-popover--calendar" content={() => <Calendar locale={locale} />}>
+    <PanelPopoverButton title={full} aria-label={full} align="end" popoverClassName="xbd-popover--calendar" content={() => <Calendar locale={locale} />}>
       {face}
     </PanelPopoverButton>
   );

@@ -122,9 +122,9 @@ function Workspace({ showIcons, compactBreakpoint }: { showIcons: boolean; compa
   }, [api, compactBreakpoint]);
 
   return (
-    <div ref={ref} className="dui-workspace">
+    <div ref={ref} className="xbd-workspace">
       {showIcons && <DesktopIcons />}
-      <div ref={widgetLayerRef} className="dui-widgets" />
+      <div ref={widgetLayerRef} className="xbd-widgets" />
       <WindowLayer />
       <Notifications />
     </div>
@@ -186,7 +186,7 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
         readyToSave.current = true;
       })
       .catch((err) => {
-        console.warn('[deskui] Could not load preferences:', err);
+        console.warn('[xBDesk] Could not load preferences:', err);
         readyToSave.current = true;
       });
     return () => {
@@ -280,11 +280,11 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
         <div
           ref={rootRef}
           className={cx(
-            'dui-root',
-            `dui-root--${resolvedScheme}`,
-            `dui-root--buttons-${buttonStyle}`,
-            compact && 'dui-root--compact',
-            fullscreen && 'dui-root--fullscreen',
+            'xbd-root',
+            `xbd-root--${resolvedScheme}`,
+            `xbd-root--buttons-${buttonStyle}`,
+            compact && 'xbd-root--compact',
+            fullscreen && 'xbd-root--fullscreen',
             className,
           )}
           data-scheme={resolvedScheme}
@@ -292,11 +292,11 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
           onKeyDown={onKeyDown}
         >
           <Wallpaper />
-          <div className="dui-shell">
+          <div className="xbd-shell">
             {children ?? <DefaultPanel />}
             <Workspace showIcons={showIcons} compactBreakpoint={compactBreakpoint} />
           </div>
-          <div ref={overlayRef} className="dui-overlay" />
+          <div ref={overlayRef} className="xbd-overlay" />
           <ContextMenuHost />
         </div>
       </DesktopConfigContext.Provider>

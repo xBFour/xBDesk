@@ -262,7 +262,7 @@ export function createDesktopController(initialPreferences: DesktopPreferences):
     openApp(appId, args, options = {}) {
       const app = appMap.get(appId);
       if (!app) {
-        console.warn(`[deskui] Unknown app "${appId}"`);
+        console.warn(`[xBDesk] Unknown app "${appId}"`);
         return null;
       }
       if (app.singleInstance !== false) {

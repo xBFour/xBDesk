@@ -3,7 +3,7 @@ import { readableForeground } from './utils';
 
 /**
  * Design tokens. Every token maps to a CSS custom property (`fontFamily` →
- * `--dui-font-family`) so themes can be set from props *or* plain CSS.
+ * `--xbd-font-family`) so themes can be set from props *or* plain CSS.
  */
 export interface ThemeTokens {
   fontFamily: string;
@@ -35,12 +35,12 @@ const kebab = (s: string) => s.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
 export function themeStyle(accentColor: string, tokens?: ThemeTokenOverrides): CSSProperties {
   const style: Record<string, string> = {
-    '--dui-accent': accentColor,
-    '--dui-accent-fg': readableForeground(accentColor),
+    '--xbd-accent': accentColor,
+    '--xbd-accent-fg': readableForeground(accentColor),
   };
   if (tokens) {
     for (const [k, v] of Object.entries(tokens)) {
-      if (v != null) style[`--dui-${kebab(k)}`] = v;
+      if (v != null) style[`--xbd-${kebab(k)}`] = v;
     }
   }
   return style as CSSProperties;

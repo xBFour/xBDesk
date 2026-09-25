@@ -16,7 +16,7 @@ import {
   useNow,
   type AppDefinition,
   type DesktopShortcut,
-} from 'deskui';
+} from 'xbdesk';
 import { CalculatorApp } from './apps/Calculator';
 import { FilesApp } from './apps/Files';
 import { TerminalApp } from './apps/Terminal';
@@ -29,7 +29,7 @@ import { WALLPAPERS } from './wallpapers';
 /* ------------------------- demo: masaüstü düzeni ------------------------- */
 
 type Layout = 'classic' | 'floating' | 'gnome' | 'vertical';
-const LAYOUT_KEY = 'deskui-demo-layout';
+const LAYOUT_KEY = 'xbdesk-demo-layout';
 const layoutListeners = new Set<() => void>();
 let layout: Layout = (() => {
   try {
@@ -161,7 +161,7 @@ function CrashApp() {
   return (
     <div className="demo-crash">
       <p>Bu uygulama, pencere başına hata sınırını (error boundary) göstermek için var. Çökse bile masaüstü çalışmaya devam eder.</p>
-      <button type="button" className="dui-button dui-button--primary" onClick={() => setCrashed(true)}>
+      <button type="button" className="xbd-button xbd-button--primary" onClick={() => setCrashed(true)}>
         Uygulamayı çökert
       </button>
     </div>
@@ -212,7 +212,7 @@ export function App() {
       apps={apps}
       shortcuts={shortcuts}
       wallpapers={WALLPAPERS}
-      persistKey="deskui-demo"
+      persistKey="xbdesk-demo"
       locale="tr"
       fullscreen
       defaultPreferences={{ wallpaper: { type: 'preset', id: 'aurora' }, workspaces: 4 }}

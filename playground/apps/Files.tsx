@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AppIcon, Icons, useContextMenu, useDesktop, useWindow, type AppComponentProps } from 'deskui';
+import { AppIcon, Icons, useContextMenu, useDesktop, useWindow, type AppComponentProps } from 'xbdesk';
 import { HOME, basename, displayPath, isText, list, normalize, stat, useFsVersion, type FsNode } from '../fs';
 import { DocumentsFolderIcon, FolderSmall, ImageFileIcon, ScriptFileIcon, TextFileIcon } from '../icons';
 
@@ -73,10 +73,10 @@ export function FilesApp({ args }: AppComponentProps<{ path?: string }>) {
       </aside>
       <section className="demo-files__main">
         <header className="demo-files__toolbar">
-          <button type="button" className="dui-icon-button" aria-label="Geri" disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
+          <button type="button" className="xbd-icon-button" aria-label="Geri" disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
             <Icons.ChevronLeftIcon />
           </button>
-          <button type="button" className="dui-icon-button" aria-label="İleri" disabled={index >= history.length - 1} onClick={() => setIndex((i) => i + 1)}>
+          <button type="button" className="xbd-icon-button" aria-label="İleri" disabled={index >= history.length - 1} onClick={() => setIndex((i) => i + 1)}>
             <Icons.ChevronRightIcon />
           </button>
           <nav className="demo-files__crumbs" aria-label="Konum">

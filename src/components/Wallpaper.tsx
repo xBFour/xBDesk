@@ -34,7 +34,7 @@ function Layer({ w, entering }: { w: Concrete; entering: boolean }) {
   let content: ReactNode = null;
   if (w.type === 'custom') content = w.render();
   return (
-    <div className={entering ? 'dui-wallpaper__layer is-entering' : 'dui-wallpaper__layer'} style={wallpaperStyle(w)}>
+    <div className={entering ? 'xbd-wallpaper__layer is-entering' : 'xbd-wallpaper__layer'} style={wallpaperStyle(w)}>
       {content}
     </div>
   );
@@ -63,7 +63,7 @@ export function Wallpaper() {
   }, [id]);
 
   return (
-    <div className="dui-wallpaper" aria-hidden="true">
+    <div className="xbd-wallpaper" aria-hidden="true">
       {layers.map((l, i) => (
         <Layer key={l.key} w={l.w} entering={layers.length > 1 && i === layers.length - 1} />
       ))}

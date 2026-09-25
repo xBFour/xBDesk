@@ -1,4 +1,4 @@
-import './styles/deskui.css';
+import './styles/xbdesk.css';
 
 export { Desktop, DefaultPanel, type DesktopProps } from './components/Desktop';
 export {

@@ -30,7 +30,7 @@ export const WindowContext = createContext<string | null>(null);
 
 export function useDesktopController(): DesktopController {
   const ctx = useContext(DesktopContext);
-  if (!ctx) throw new Error('[deskui] This hook must be used inside <Desktop>.');
+  if (!ctx) throw new Error('[xBDesk] This hook must be used inside <Desktop>.');
   return ctx;
 }
 
@@ -50,7 +50,7 @@ export function usePreferences(): DesktopPreferences {
 
 export function useDesktopConfig(): DesktopConfig {
   const ctx = useContext(DesktopConfigContext);
-  if (!ctx) throw new Error('[deskui] This hook must be used inside <Desktop>.');
+  if (!ctx) throw new Error('[xBDesk] This hook must be used inside <Desktop>.');
   return ctx;
 }
 
@@ -73,7 +73,7 @@ export interface WindowHandle {
 /** Inside an app window: access and control the hosting window. */
 export function useWindow<A = unknown>(): WindowHandle & { args: A } {
   const id = useContext(WindowContext);
-  if (!id) throw new Error('[deskui] useWindow() must be used inside a window.');
+  if (!id) throw new Error('[xBDesk] useWindow() must be used inside a window.');
   const api = useDesktopController();
   const state = useDesktopState((s) => s.windows[id], Object.is);
   const focused = useDesktopState((s) => s.focusedId === id, Object.is);

@@ -5,7 +5,7 @@ export function cx(...parts: Array<string | false | null | undefined>): string {
 }
 
 let idCounter = 0;
-export function uid(prefix = 'dui'): string {
+export function uid(prefix = 'xbd'): string {
   idCounter += 1;
   return `${prefix}-${Date.now().toString(36)}-${idCounter.toString(36)}`;
 }

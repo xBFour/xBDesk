@@ -130,19 +130,19 @@ export function MenuList({ items, x, y, onClose, anchorRect, onBack, className }
     <>
       <div
         ref={ref}
-        className={cx('dui-menu', className)}
+        className={cx('xbd-menu', className)}
         role="menu"
         tabIndex={-1}
-        data-dui-menu=""
+        data-xbd-menu=""
         style={{ left: pos?.left ?? 0, top: pos?.top ?? 0, opacity: pos ? undefined : 0, pointerEvents: pos ? undefined : 'none' }}
         onKeyDown={onKeyDown}
         onContextMenu={(e) => e.preventDefault()}
       >
         {items.map((it, i) => {
-          if (it.type === 'separator') return <div key={i} className="dui-menu__sep" role="separator" />;
+          if (it.type === 'separator') return <div key={i} className="xbd-menu__sep" role="separator" />;
           if (it.type === 'label') {
             return (
-              <div key={i} className="dui-menu__label">
+              <div key={i} className="xbd-menu__label">
                 {it.label}
               </div>
             );
@@ -159,7 +159,7 @@ export function MenuList({ items, x, y, onClose, anchorRect, onBack, className }
               aria-haspopup={it.items?.length ? 'menu' : undefined}
               aria-expanded={it.items?.length ? sub?.index === i : undefined}
               className={cx(
-                'dui-menu__item',
+                'xbd-menu__item',
                 i === active && 'is-active',
                 it.danger && 'is-danger',
                 it.disabled && 'is-disabled',
@@ -175,12 +175,12 @@ export function MenuList({ items, x, y, onClose, anchorRect, onBack, className }
               }}
               onClick={() => select(i)}
             >
-              <span className="dui-menu__icon">
+              <span className="xbd-menu__icon">
                 {it.checked ? <CheckIcon /> : it.icon ? <AppIcon icon={it.icon} size={16} /> : null}
               </span>
-              <span className="dui-menu__text">{it.label}</span>
-              {it.shortcut && <span className="dui-menu__shortcut">{it.shortcut}</span>}
-              {it.items?.length ? <ChevronRightIcon className="dui-menu__chevron" /> : null}
+              <span className="xbd-menu__text">{it.label}</span>
+              {it.shortcut && <span className="xbd-menu__shortcut">{it.shortcut}</span>}
+              {it.items?.length ? <ChevronRightIcon className="xbd-menu__chevron" /> : null}
             </div>
           );
         })}
@@ -221,7 +221,7 @@ export function ContextMenuHost() {
     }
     const close = () => api.closeContextMenu();
     const onDown = (e: PointerEvent) => {
-      if (!(e.target instanceof Element) || !e.target.closest('[data-dui-menu]')) close();
+      if (!(e.target instanceof Element) || !e.target.closest('[data-xbd-menu]')) close();
     };
     document.addEventListener('pointerdown', onDown, true);
     window.addEventListener('blur', close);

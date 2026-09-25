@@ -1,17 +1,17 @@
 {
-  "name": "deskui",
+  "name": "xbdesk",
   "version": "0.1.0",
   "private": true,
   "description": "Linux masaüstü tarzı web arayüz kiti — React için pencere yöneticisi, masaüstü simgeleri, panel, saat, duvar kağıdı ve tema.",
   "type": "module",
-  "main": "./dist/deskui.cjs",
-  "module": "./dist/deskui.js",
+  "main": "./dist/xbdesk.cjs",
+  "module": "./dist/xbdesk.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/deskui.js",
-      "require": "./dist/deskui.cjs"
+      "import": "./dist/xbdesk.js",
+      "require": "./dist/xbdesk.cjs"
     },
     "./style.css": "./dist/style.css"
   },

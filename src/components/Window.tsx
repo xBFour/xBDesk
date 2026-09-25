@@ -68,16 +68,16 @@ class WindowErrorBoundary extends Component<
     return { error };
   }
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('[deskui] Window content crashed:', error, info.componentStack);
+    console.error('[xBDesk] Window content crashed:', error, info.componentStack);
   }
   render() {
     if (!this.state.error) return this.props.children;
     return (
-      <div className="dui-window__crash" role="alert">
+      <div className="xbd-window__crash" role="alert">
         <AlertIcon width={32} height={32} />
         <p>{this.props.message}</p>
         <code>{this.state.error.message}</code>
-        <button type="button" className="dui-button" onClick={this.props.onReload}>
+        <button type="button" className="xbd-button" onClick={this.props.onReload}>
           {this.props.reloadLabel}
         </button>
       </div>
@@ -127,7 +127,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
   const maximized = compact || w.maximized;
   const interactive = !compact;
 
-  const setInteracting = (on: boolean) => rootRef.current?.classList.toggle('dui-root--interacting', on);
+  const setInteracting = (on: boolean) => rootRef.current?.classList.toggle('xbd-root--interacting', on);
 
   /* -------------------------------- move -------------------------------- */
   const onTitlePointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -275,11 +275,11 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
   // Left-side layouts put "close" at the outer edge (GNOME/macOS convention).
   const order = buttonSide === 'left' ? [...windowButtons].sort((a, b) => Number(b === 'close') - Number(a === 'close')) : windowButtons;
   const buttons = (
-    <div className="dui-window__buttons">
+    <div className="xbd-window__buttons">
       {order.map((btn: WindowButton) => {
         if (btn === 'minimize' && w.minimizable) {
           return (
-            <button key={btn} type="button" className="dui-window__btn dui-window__btn--minimize" aria-label={labels.minimize} title={labels.minimize} onClick={() => api.minimizeWindow(id)}>
+            <button key={btn} type="button" className="xbd-window__btn xbd-window__btn--minimize" aria-label={labels.minimize} title={labels.minimize} onClick={() => api.minimizeWindow(id)}>
               <MinimizeIcon />
             </button>
           );
@@ -287,14 +287,14 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
         if (btn === 'maximize' && w.maximizable && !compact) {
           const label = w.maximized ? labels.restore : labels.maximize;
           return (
-            <button key={btn} type="button" className="dui-window__btn dui-window__btn--maximize" aria-label={label} title={label} onClick={() => api.toggleMaximize(id)}>
+            <button key={btn} type="button" className="xbd-window__btn xbd-window__btn--maximize" aria-label={label} title={label} onClick={() => api.toggleMaximize(id)}>
               {w.maximized ? <RestoreIcon /> : <MaximizeIcon />}
             </button>
           );
         }
         if (btn === 'close') {
           return (
-            <button key={btn} type="button" className="dui-window__btn dui-window__btn--close" aria-label={labels.close} title={labels.close} onClick={() => void api.requestClose(id)}>
+            <button key={btn} type="button" className="xbd-window__btn xbd-window__btn--close" aria-label={labels.close} title={labels.close} onClick={() => void api.requestClose(id)}>
               <CloseIcon />
             </button>
           );
@@ -314,7 +314,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
       aria-hidden={!visible || w.minimized || undefined}
       tabIndex={-1}
       className={cx(
-        'dui-window',
+        'xbd-window',
         focused && 'is-focused',
         maximized && 'is-maximized',
         w.tiled && !maximized && `is-tiled is-tiled-${w.tiled}`,
@@ -334,7 +334,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
       }}
     >
       <div
-        className={cx('dui-window__titlebar', `dui-window__titlebar--${titleAlign}`, buttonSide === 'left' && 'has-buttons-left')}
+        className={cx('xbd-window__titlebar', `xbd-window__titlebar--${titleAlign}`, buttonSide === 'left' && 'has-buttons-left')}
         onPointerDown={onTitlePointerDown}
         onDoubleClick={(e) => {
           if (!(e.target as HTMLElement).closest('button') && interactive) api.toggleMaximize(id);
@@ -344,21 +344,21 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
           api.openContextMenu(e.clientX, e.clientY, windowMenu(api, w, labels, workspaces));
         }}
       >
-        <span className="dui-window__heading">
-          <AppIcon icon={w.icon} size={16} className="dui-window__icon" />
-          <span id={titleId} className="dui-window__title">
+        <span className="xbd-window__heading">
+          <AppIcon icon={w.icon} size={16} className="xbd-window__icon" />
+          <span id={titleId} className="xbd-window__title">
             {w.title}
           </span>
         </span>
         {buttons}
       </div>
-      <div className={cx('dui-window__body', w.bare && 'is-bare')}>
+      <div className={cx('xbd-window__body', w.bare && 'is-bare')}>
         <WindowContext.Provider value={id}>
           <WindowErrorBoundary key={w.generation} message={labels.appCrashed} reloadLabel={labels.reload} onReload={() => api.reloadWindow(id)}>
             <Suspense
               fallback={
-                <div className="dui-window__loading" aria-live="polite">
-                  <span className="dui-spinner" />
+                <div className="xbd-window__loading" aria-live="polite">
+                  <span className="xbd-spinner" />
                   {labels.loading}
                 </div>
               }
@@ -369,7 +369,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
         </WindowContext.Provider>
       </div>
       {interactive && w.resizable && !w.maximized &&
-        EDGES.map((edge) => <div key={edge} className={`dui-window__resize dui-window__resize--${edge}`} onPointerDown={onResizePointerDown(edge)} />)}
+        EDGES.map((edge) => <div key={edge} className={`xbd-window__resize xbd-window__resize--${edge}`} onPointerDown={onResizePointerDown(edge)} />)}
     </div>
   );
 });
@@ -381,10 +381,10 @@ export function WindowLayer() {
   const ids = useDesktopState((s) => Object.keys(s.windows));
   const preview = useDesktopState((s) => s.snapPreview, Object.is);
   return (
-    <div className="dui-windows">
+    <div className="xbd-windows">
       {preview && (
         <div
-          className="dui-snap-preview"
+          className="xbd-snap-preview"
           style={{ left: preview.x, top: preview.y, width: preview.width, height: preview.height, zIndex: 9 + (stack.length - 1) * 2 }}
         />
       )}

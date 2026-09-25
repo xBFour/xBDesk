@@ -1,4 +1,4 @@
-import type { WallpaperPreset } from 'deskui';
+import type { WallpaperPreset } from 'xbdesk';
 
 // Demo duvar kağıtları: harici görsel yok, hepsi kodla üretilen SVG/CSS.
 

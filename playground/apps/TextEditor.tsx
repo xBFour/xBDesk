@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useCloseGuard, useDesktop, useWindow, type AppComponentProps } from 'deskui';
+import { useCloseGuard, useDesktop, useWindow, type AppComponentProps } from 'xbdesk';
 import { HOME, basename, readFile, writeFile } from '../fs';
 
 export function TextEditorApp({ args }: AppComponentProps<{ path?: string }>) {
@@ -45,10 +45,10 @@ export function TextEditorApp({ args }: AppComponentProps<{ path?: string }>) {
   return (
     <div className="demo-editor">
       <header className="demo-editor__toolbar">
-        <button type="button" className="dui-button dui-button--small" onClick={() => api.openApp('editor')}>
+        <button type="button" className="xbd-button xbd-button--small" onClick={() => api.openApp('editor')}>
           Yeni
         </button>
-        <button type="button" className="dui-button dui-button--small dui-button--primary" onClick={save} disabled={!dirty && !!path}>
+        <button type="button" className="xbd-button xbd-button--small xbd-button--primary" onClick={save} disabled={!dirty && !!path}>
           Kaydet
         </button>
         <span className="demo-editor__path">{path ?? '—'}</span>
@@ -77,15 +77,15 @@ export function TextEditorApp({ args }: AppComponentProps<{ path?: string }>) {
             <h3 id="demo-dialog-title">Değişiklikler kaydedilsin mi?</h3>
             <p>"{name}" belgesinde kaydedilmemiş değişiklikler var.</p>
             <div className="demo-dialog__actions">
-              <button type="button" className="dui-button" onClick={() => answer(false)}>
+              <button type="button" className="xbd-button" onClick={() => answer(false)}>
                 İptal
               </button>
-              <button type="button" className="dui-button" onClick={() => answer(true)}>
+              <button type="button" className="xbd-button" onClick={() => answer(true)}>
                 Kaydetmeden kapat
               </button>
               <button
                 type="button"
-                className="dui-button dui-button--primary"
+                className="xbd-button xbd-button--primary"
                 autoFocus
                 onClick={() => {
                   save();

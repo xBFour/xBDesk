@@ -29,7 +29,7 @@ export interface SettingsAppOptions {
 
 function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: Array<{ value: T; label: string }>; onChange: (v: T) => void; label: string }) {
   return (
-    <div className="dui-segmented" role="radiogroup" aria-label={label}>
+    <div className="xbd-segmented" role="radiogroup" aria-label={label}>
       {options.map((o) => (
         <button key={o.value} type="button" role="radio" aria-checked={value === o.value} className={cx(value === o.value && 'is-active')} onClick={() => onChange(o.value)}>
           {o.label}
@@ -41,9 +41,9 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="dui-settings__row">
-      <span className="dui-settings__label">{label}</span>
-      <div className="dui-settings__control">{children}</div>
+    <div className="xbd-settings__row">
+      <span className="xbd-settings__label">{label}</span>
+      <div className="xbd-settings__control">{children}</div>
     </div>
   );
 }
@@ -87,13 +87,13 @@ function BackgroundSection() {
 
   return (
     <>
-      <div className="dui-settings__preview" style={concrete && concrete.type !== 'custom' ? wallpaperStyle(concrete) : undefined}>
+      <div className="xbd-settings__preview" style={concrete && concrete.type !== 'custom' ? wallpaperStyle(concrete) : undefined}>
         {concrete?.type === 'custom' && concrete.render()}
       </div>
       {wallpapers.length > 0 && (
         <section>
           <h3>{L.wallpapers}</h3>
-          <div className="dui-wallpaper-grid">
+          <div className="xbd-wallpaper-grid">
             {wallpapers.map((p) => {
               const selected = current.type === 'preset' && current.id === p.id;
               const style = p.thumbnail ? { backgroundImage: `url("${p.thumbnail}")`, backgroundSize: 'cover' } : p.wallpaper.type === 'custom' ? undefined : wallpaperStyle(p.wallpaper);
@@ -101,15 +101,15 @@ function BackgroundSection() {
                 <button
                   key={p.id}
                   type="button"
-                  className={cx('dui-wallpaper-grid__item', selected && 'is-active')}
+                  className={cx('xbd-wallpaper-grid__item', selected && 'is-active')}
                   aria-pressed={selected}
                   title={p.name}
                   onClick={() => api.setWallpaper({ type: 'preset', id: p.id })}
                 >
-                  <span className="dui-wallpaper-grid__thumb" style={style}>
+                  <span className="xbd-wallpaper-grid__thumb" style={style}>
                     {!p.thumbnail && p.wallpaper.type === 'custom' && p.wallpaper.render()}
                   </span>
-                  <span className="dui-wallpaper-grid__name">{p.name}</span>
+                  <span className="xbd-wallpaper-grid__name">{p.name}</span>
                 </button>
               );
             })}
@@ -119,7 +119,7 @@ function BackgroundSection() {
       <section>
         {concrete?.type === 'image' && (
           <Row label={L.fit}>
-            <select className="dui-input" value={fit} onChange={(e) => api.setWallpaper({ ...concrete, fit: e.target.value as WallpaperFit })}>
+            <select className="xbd-input" value={fit} onChange={(e) => api.setWallpaper({ ...concrete, fit: e.target.value as WallpaperFit })}>
               {(Object.keys(L.fits) as WallpaperFit[]).map((f) => (
                 <option key={f} value={f}>
                   {L.fits[f]}
@@ -129,24 +129,24 @@ function BackgroundSection() {
           </Row>
         )}
         <Row label={L.solidColor}>
-          <input className="dui-color-input" type="color" value={color} onChange={(e) => api.setWallpaper({ type: 'color', color: e.target.value })} aria-label={L.solidColor} />
+          <input className="xbd-color-input" type="color" value={color} onChange={(e) => api.setWallpaper({ type: 'color', color: e.target.value })} aria-label={L.solidColor} />
         </Row>
         <Row label={L.imageUrl}>
           <form
-            className="dui-inline-form"
+            className="xbd-inline-form"
             onSubmit={(e) => {
               e.preventDefault();
               if (url.trim()) setImage(url.trim());
             }}
           >
-            <input className="dui-input" type="url" placeholder="https://…" value={url} onChange={(e) => setUrl(e.target.value)} aria-label={L.imageUrl} />
-            <button type="submit" className="dui-button">
+            <input className="xbd-input" type="url" placeholder="https://…" value={url} onChange={(e) => setUrl(e.target.value)} aria-label={L.imageUrl} />
+            <button type="submit" className="xbd-button">
               {L.apply}
             </button>
           </form>
         </Row>
         <Row label="">
-          <label className="dui-button dui-button--ghost">
+          <label className="xbd-button xbd-button--ghost">
             <UploadIcon /> {L.uploadImage}
             <input
               type="file"
@@ -181,7 +181,7 @@ function AppearanceSection() {
         />
       </Row>
       <Row label={L.accentColor}>
-        <div className="dui-swatches" role="radiogroup" aria-label={L.accentColor}>
+        <div className="xbd-swatches" role="radiogroup" aria-label={L.accentColor}>
           {ACCENT_COLORS.map((c) => (
             <button
               key={c}
@@ -189,16 +189,16 @@ function AppearanceSection() {
               role="radio"
               aria-checked={prefs.accentColor.toLowerCase() === c}
               aria-label={c}
-              className={cx('dui-swatch', prefs.accentColor.toLowerCase() === c && 'is-active')}
+              className={cx('xbd-swatch', prefs.accentColor.toLowerCase() === c && 'is-active')}
               style={{ background: c }}
               onClick={() => api.setPreferences({ accentColor: c })}
             />
           ))}
-          <input className="dui-color-input" type="color" value={prefs.accentColor} title={L.customColor} aria-label={L.customColor} onChange={(e) => api.setPreferences({ accentColor: e.target.value })} />
+          <input className="xbd-color-input" type="color" value={prefs.accentColor} title={L.customColor} aria-label={L.customColor} onChange={(e) => api.setPreferences({ accentColor: e.target.value })} />
         </div>
       </Row>
       <Row label={L.windowButtons}>
-        <div className="dui-settings__stack">
+        <div className="xbd-settings__stack">
           <Segmented label={L.windowButtons} value={prefs.buttonSide} onChange={(buttonSide) => api.setPreferences({ buttonSide })} options={(['left', 'right'] as const).map((v) => ({ value: v, label: L.buttonSide[v] }))} />
           <Segmented label={L.windowButtons} value={prefs.buttonStyle} onChange={(buttonStyle) => api.setPreferences({ buttonStyle })} options={(['icons', 'dots'] as const).map((v) => ({ value: v, label: L.buttonStyle[v] }))} />
         </div>
@@ -262,16 +262,16 @@ function SettingsView({ options, args }: { options: SettingsAppOptions; args?: {
 
   const current = sections.find((s) => s.id === active) ?? sections[0];
   return (
-    <div className="dui-settings">
-      <nav className="dui-settings__nav" aria-label={L.title}>
+    <div className="xbd-settings">
+      <nav className="xbd-settings__nav" aria-label={L.title}>
         {sections.map((s) => (
-          <button key={s.id} type="button" className={cx('dui-settings__nav-item', s.id === current?.id && 'is-active')} aria-current={s.id === current?.id ? 'page' : undefined} onClick={() => setActive(s.id)}>
+          <button key={s.id} type="button" className={cx('xbd-settings__nav-item', s.id === current?.id && 'is-active')} aria-current={s.id === current?.id ? 'page' : undefined} onClick={() => setActive(s.id)}>
             {s.icon}
             <span>{s.title}</span>
           </button>
         ))}
       </nav>
-      <div className="dui-settings__content">
+      <div className="xbd-settings__content">
         <h2>{current?.title}</h2>
         {current?.render()}
       </div>

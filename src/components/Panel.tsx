@@ -50,23 +50,23 @@ export function Panel({ position, size = 44, floating, translucent = true, class
         role="region"
         aria-label={rest['aria-label'] ?? 'Panel'}
         className={cx(
-          'dui-panel',
-          `dui-panel--${pos}`,
-          vertical ? 'dui-panel--vertical' : 'dui-panel--horizontal',
-          floating && 'dui-panel--floating',
-          translucent && 'dui-panel--translucent',
+          'xbd-panel',
+          `xbd-panel--${pos}`,
+          vertical ? 'xbd-panel--vertical' : 'xbd-panel--horizontal',
+          floating && 'xbd-panel--floating',
+          translucent && 'xbd-panel--translucent',
           className,
         )}
-        style={{ ['--dui-panel-size' as string]: `${size}px`, ...style }}
+        style={{ ['--xbd-panel-size' as string]: `${size}px`, ...style }}
       >
-        <div className="dui-panel__inner">{children}</div>
+        <div className="xbd-panel__inner">{children}</div>
       </div>
     </PanelContext.Provider>
   );
 }
 
-export const PanelSpacer = () => <div className="dui-panel-spacer" aria-hidden="true" />;
-export const PanelSeparator = () => <div className="dui-panel-separator" role="separator" />;
+export const PanelSpacer = () => <div className="xbd-panel-spacer" aria-hidden="true" />;
+export const PanelSeparator = () => <div className="xbd-panel-separator" role="separator" />;
 
 export interface PanelButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: IconSource;
@@ -79,9 +79,9 @@ export const PanelButton = forwardRef<HTMLButtonElement, PanelButtonProps>(funct
   ref,
 ) {
   return (
-    <button ref={ref} type="button" className={cx('dui-panel-button', active && 'is-active', className)} {...rest}>
+    <button ref={ref} type="button" className={cx('xbd-panel-button', active && 'is-active', className)} {...rest}>
       {icon !== undefined && <AppIcon icon={icon} size={18} />}
-      {label !== undefined && <span className="dui-panel-button__label">{label}</span>}
+      {label !== undefined && <span className="xbd-panel-button__label">{label}</span>}
       {children}
     </button>
   );
@@ -120,7 +120,7 @@ export function PanelPopoverButton({ content, popoverClassName, align, title, ..
 }
 
 export function SystemTray({ children }: { children?: ReactNode }) {
-  return <div className="dui-tray">{children}</div>;
+  return <div className="xbd-tray">{children}</div>;
 }
 
 export function ShowDesktopButton() {
@@ -168,19 +168,19 @@ export function WorkspaceSwitcher({ alwaysShow }: WorkspaceSwitcherProps) {
     if (dir) api.switchWorkspace((active + dir + count) % count);
   };
   return (
-    <div className="dui-workspaces" role="group" aria-label={labels.workspace(active + 1)} onWheel={onWheel}>
+    <div className="xbd-workspaces" role="group" aria-label={labels.workspace(active + 1)} onWheel={onWheel}>
       {Array.from({ length: count }, (_, i) => (
         <button
           key={i}
           type="button"
-          className={cx('dui-workspaces__item', i === active && 'is-active')}
+          className={cx('xbd-workspaces__item', i === active && 'is-active')}
           aria-pressed={i === active}
           aria-label={labels.workspace(i + 1)}
           title={labels.workspace(i + 1)}
           onClick={() => api.switchWorkspace(i)}
         >
-          <span className="dui-workspaces__num">{i + 1}</span>
-          <span className="dui-workspaces__dots" aria-hidden="true">
+          <span className="xbd-workspaces__num">{i + 1}</span>
+          <span className="xbd-workspaces__dots" aria-hidden="true">
             {Array.from({ length: Math.min(perWorkspace[i] ?? 0, 3) }, (_, d) => (
               <i key={d} />
             ))}
@@ -215,7 +215,7 @@ export function WindowList({ showLabels, allWorkspaces }: WindowListProps) {
   const labelsOn = (showLabels ?? !vertical) && !compact;
 
   return (
-    <div className={cx('dui-window-list', labelsOn && 'has-labels')} role="group">
+    <div className={cx('xbd-window-list', labelsOn && 'has-labels')} role="group">
       {ids.map((id) => {
         const w = windows[id];
         if (!w) return null;
@@ -224,7 +224,7 @@ export function WindowList({ showLabels, allWorkspaces }: WindowListProps) {
           <button
             key={id}
             type="button"
-            className={cx('dui-window-list__item', active && 'is-active', w.minimized && 'is-minimized')}
+            className={cx('xbd-window-list__item', active && 'is-active', w.minimized && 'is-minimized')}
             aria-pressed={active}
             title={w.title}
             onClick={() => api.activateWindow(id)}
@@ -240,7 +240,7 @@ export function WindowList({ showLabels, allWorkspaces }: WindowListProps) {
             }}
           >
             <AppIcon icon={w.icon} size={18} />
-            {labelsOn && <span className="dui-window-list__label">{w.title}</span>}
+            {labelsOn && <span className="xbd-window-list__label">{w.title}</span>}
           </button>
         );
       })}

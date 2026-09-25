@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { useDesktop, useWindow, type ColorScheme } from 'deskui';
+import { useDesktop, useWindow, type ColorScheme } from 'xbdesk';
 import { HOME, displayPath, list, normalize, readFile, stat } from '../fs';
 import { WALLPAPERS } from '../wallpapers';
 
@@ -28,7 +28,7 @@ export function TerminalApp() {
     setLines((l) => [...l, ...nodes.map((node) => ({ id: idRef.current++, node }))]);
 
   useEffect(() => {
-    print(<span className="demo-term__muted">deskui terminali — komutlar için "help" yazın.</span>);
+    print(<span className="demo-term__muted">xBDesk terminali — komutlar için "help" yazın.</span>);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -38,7 +38,7 @@ export function TerminalApp() {
 
   const prompt = (path: string) => (
     <>
-      <span className="demo-term__user">kullanici@deskui</span>:<span className="demo-term__path">{displayPath(path)}</span>$
+      <span className="demo-term__user">kullanici@xbdesk</span>:<span className="demo-term__path">{displayPath(path)}</span>$
     </>
   );
 
@@ -112,7 +112,7 @@ export function TerminalApp() {
         print('kullanici');
         break;
       case 'uname':
-        print('deskui 0.1.0 web-desktop react');
+        print('xbdesk 0.1.0 web-desktop react');
         break;
       case 'clear':
         setLines([]);
@@ -129,10 +129,10 @@ export function TerminalApp() {
 └────────┬─────────┘
       ───┴───`}</pre>
             <pre>
-              <span className="demo-term__user">kullanici@deskui</span>
+              <span className="demo-term__user">kullanici@xbdesk</span>
               {`
 ----------------
-İS: deskui 0.1.0 (web)
+İS: xBDesk 0.1.0 (web)
 Çekirdek: React
 Uptime: ${Math.floor(up / 60)} dk ${up % 60} sn
 Çözünürlük: ${s.viewport.width}x${s.viewport.height}

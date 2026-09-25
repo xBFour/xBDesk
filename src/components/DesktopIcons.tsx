@@ -352,7 +352,7 @@ export function DesktopIcons() {
   return (
     <div
       ref={containerRef}
-      className={cx('dui-icons', `dui-icons--${iconSize}`)}
+      className={cx('xbd-icons', `xbd-icons--${iconSize}`)}
       role="listbox"
       aria-multiselectable="true"
       aria-orientation="vertical"
@@ -376,19 +376,19 @@ export function DesktopIcons() {
             aria-selected={isSel}
             tabIndex={item.id === tabStop ? 0 : -1}
             title={item.title}
-            className={cx('dui-desktop-icon', isSel && 'is-selected')}
+            className={cx('xbd-desktop-icon', isSel && 'is-selected')}
             style={{ left: p.x, top: p.y, width: m.w, height: m.h }}
             onPointerDown={onIconPointerDown(item.id)}
             onDoubleClick={() => openIconsWith === 'doubleClick' && item.open()}
             onContextMenu={onIconContextMenu(item)}
             onFocus={() => setFocusId(item.id)}
           >
-            <AppIcon icon={item.icon} size={m.icon} className="dui-desktop-icon__img" />
-            <span className="dui-desktop-icon__label">{item.title}</span>
+            <AppIcon icon={item.icon} size={m.icon} className="xbd-desktop-icon__img" />
+            <span className="xbd-desktop-icon__label">{item.title}</span>
           </div>
         );
       })}
-      {band && <div className="dui-rubber-band" style={{ left: band.x, top: band.y, width: band.width, height: band.height }} />}
+      {band && <div className="xbd-rubber-band" style={{ left: band.x, top: band.y, width: band.width, height: band.height }} />}
     </div>
   );
 }
