@@ -58,6 +58,11 @@ export function useLabels(): DesktopLabels {
   return useDesktopConfig().labels;
 }
 
+/** The colour scheme actually shown (`auto` resolved against the OS setting). */
+export function useResolvedColorScheme(): 'light' | 'dark' {
+  return useDesktopConfig().resolvedScheme;
+}
+
 export interface WindowHandle {
   id: string;
   state: WindowState;

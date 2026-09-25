@@ -17,13 +17,15 @@ import {
   type AppDefinition,
   type DesktopShortcut,
 } from 'xbdesk';
+import { createRouterApp } from 'xbdesk/react-router';
 import { CalculatorApp } from './apps/Calculator';
+import { CONTACTS, contactRoutes } from './apps/Contacts';
 import { FilesApp } from './apps/Files';
 import { TerminalApp } from './apps/Terminal';
 import { TextEditorApp } from './apps/TextEditor';
 import { WelcomeApp } from './apps/Welcome';
 import { HOME } from './fs';
-import { CalculatorIcon, DocumentsFolderIcon, EditorIcon, FilesIcon, MonitorIcon, TerminalIcon, TextFileIcon, WelcomeIcon } from './icons';
+import { CalculatorIcon, ContactsIcon, DocumentsFolderIcon, EditorIcon, FilesIcon, MonitorIcon, TerminalIcon, TextFileIcon, WelcomeIcon } from './icons';
 import { WALLPAPERS } from './wallpapers';
 
 /* ------------------------- demo: masaüstü düzeni ------------------------- */
@@ -193,6 +195,21 @@ export function App() {
             render: () => <LayoutSection />,
           },
         ],
+      }),
+      createRouterApp({
+        id: 'contacts',
+        title: 'Rehber',
+        icon: ContactsIcon,
+        category: 'Donatılar',
+        keywords: ['kişi', 'router'],
+        singleInstance: false,
+        path: '/kisiler',
+        element: contactRoutes,
+        windowTitle: (loc) => {
+          const c = CONTACTS.find((x) => loc.pathname === `/kisiler/${x.id}`);
+          return c ? `${c.name} — Rehber` : 'Rehber';
+        },
+        window: { width: 520, height: 520, bare: true },
       }),
       { id: 'crash', title: 'Çökme testi', component: CrashApp, category: 'Geliştirici', showOnDesktop: false, window: { width: 420, height: 260 } },
     ],

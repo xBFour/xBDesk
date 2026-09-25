@@ -17,7 +17,8 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "xbdesk": ["src/index.ts"]
+      "xbdesk": ["src/index.ts"],
+      "xbdesk/react-router": ["src/adapters/react-router.tsx"]
     }
   },
   "include": ["src", "playground", "vite.config.ts", "vite.playground.config.ts"]

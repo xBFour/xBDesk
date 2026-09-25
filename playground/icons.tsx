@@ -111,3 +111,12 @@ export const ScriptFileIcon = (
     <path d="M23 32h8" stroke="#e6edf3" strokeWidth="2.4" strokeLinecap="round" />
   </Svg>
 );
+
+export const ContactsIcon = (
+  <Svg>
+    <rect x="7" y="4" width="34" height="40" rx="5" fill="#e66100" />
+    <rect x="7" y="4" width="6" height="40" rx="3" fill="#c64600" />
+    <circle cx="26" cy="19" r="6" fill="#fff" />
+    <path d="M16 35c1.5-5.5 5.5-8 10-8s8.5 2.5 10 8z" fill="#fff" />
+  </Svg>
+);

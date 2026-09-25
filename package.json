@@ -13,6 +13,11 @@
       "import": "./dist/xbdesk.js",
       "require": "./dist/xbdesk.cjs"
     },
+    "./react-router": {
+      "types": "./dist/adapters/react-router.d.ts",
+      "import": "./dist/react-router.js",
+      "require": "./dist/react-router.cjs"
+    },
     "./style.css": "./dist/style.css"
   },
   "sideEffects": [
@@ -30,7 +35,13 @@
   },
   "peerDependencies": {
     "react": ">=18.2.0",
-    "react-dom": ">=18.2.0"
+    "react-dom": ">=18.2.0",
+    "react-router-dom": ">=6.4.0"
+  },
+  "peerDependenciesMeta": {
+    "react-router-dom": {
+      "optional": true
+    }
   },
   "keywords": [
     "react",
@@ -47,6 +58,7 @@
     "@vitejs/plugin-react": "^5.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.6",
     "typescript": "~5.9",
     "vite": "^7.3.6",
     "vite-plugin-singlefile": "^2.3.3"

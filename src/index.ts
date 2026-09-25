@@ -33,6 +33,7 @@ export {
   useDesktopState,
   usePreferences,
   useLabels,
+  useResolvedColorScheme,
   useWindow,
   useCloseGuard,
   useContextMenu,

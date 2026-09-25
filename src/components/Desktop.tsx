@@ -17,7 +17,7 @@ import { createDesktopController, DEFAULT_PREFERENCES, type DesktopApi } from '.
 import { useStoreSelector } from '../store/store';
 import { localStorageAdapter, sanitizeLoaded } from '../storage';
 import { themeStyle, type ThemeTokenOverrides } from '../theme';
-import type { AppDefinition, DesktopPreferences, DesktopShortcut, DesktopStorage, MenuEntry, WallpaperPreset } from '../types';
+import type { AppDefinition, ColorScheme, DesktopPreferences, DesktopShortcut, DesktopStorage, MenuEntry, WallpaperPreset } from '../types';
 import { cx, isTypingTarget } from '../utils';
 import { AppMenuButton } from './AppMenu';
 import { Clock } from './Clock';
@@ -47,6 +47,13 @@ export interface DesktopProps {
   labels?: LabelOverrides;
   /** Theme token overrides, applied as CSS custom properties. */
   tokens?: ThemeTokenOverrides;
+  /**
+   * Controlled colour scheme, e.g. your application's theme. It overrides the
+   * stored preference; pair it with `onColorSchemeChange` for two-way sync.
+   */
+  colorScheme?: ColorScheme;
+  /** Called when the scheme changes inside the desktop (panel toggle, settings, menu). */
+  onColorSchemeChange?: (scheme: ColorScheme, resolved: 'light' | 'dark') => void;
   /** Title-bar button order. Default `['minimize', 'maximize', 'close']`. */
   windowButtons?: WindowButton[];
   titleAlign?: 'left' | 'center';
@@ -147,6 +154,8 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
     locale: localeProp,
     labels: labelOverrides,
     tokens,
+    colorScheme: colorSchemeProp,
+    onColorSchemeChange,
     windowButtons = DEFAULT_BUTTONS,
     titleAlign = 'center',
     iconsAlign = 'left',
@@ -168,7 +177,12 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
   const [boot] = useState(() => {
     const loaded = storage?.load();
     const pending = loaded && typeof (loaded as Promise<unknown>).then === 'function' ? (loaded as Promise<Partial<DesktopPreferences>>) : null;
-    const initial = { ...DEFAULT_PREFERENCES, ...defaultPreferences, ...(pending ? {} : sanitizeLoaded(loaded as Partial<DesktopPreferences>)) };
+    const initial = {
+      ...DEFAULT_PREFERENCES,
+      ...defaultPreferences,
+      ...(pending ? {} : sanitizeLoaded(loaded as Partial<DesktopPreferences>)),
+      ...(colorSchemeProp ? { colorScheme: colorSchemeProp } : {}),
+    };
     return { controller: createDesktopController(initial), pending };
   });
   const controller = boot.controller;
@@ -235,6 +249,22 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
   const compact = useStoreSelector(controller.store, (s) => s.compact);
   const prefersDark = usePrefersDark();
   const resolvedScheme = colorScheme === 'auto' ? (prefersDark ? 'dark' : 'light') : colorScheme;
+
+  // Colour-scheme bridge: the controlled prop wins; changes made inside the desktop are reported back.
+  useLayoutEffect(() => {
+    if (colorSchemeProp && controller.getState().preferences.colorScheme !== colorSchemeProp) {
+      controller.setPreferences({ colorScheme: colorSchemeProp });
+    }
+  }, [colorSchemeProp, controller]);
+  const onSchemeRef = useRef(onColorSchemeChange);
+  onSchemeRef.current = onColorSchemeChange;
+  const reportedScheme = useRef(colorScheme);
+  useEffect(() => {
+    if (reportedScheme.current === colorScheme) return;
+    reportedScheme.current = colorScheme;
+    if (colorSchemeProp && colorScheme === colorSchemeProp) return;
+    onSchemeRef.current?.(colorScheme, resolvedScheme);
+  }, [colorScheme, colorSchemeProp, resolvedScheme]);
 
   const locale = localeProp ?? detectLocale();
   const labels = useMemo(() => resolveLabels(locale, labelOverrides), [locale, labelOverrides]);

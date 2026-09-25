@@ -9,9 +9,10 @@ export default defineConfig(({ mode }) => ({
   base: './',
   plugins: [react(), ...(mode === 'singlefile' ? [viteSingleFile()] : [])],
   resolve: {
-    alias: {
-      xbdesk: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
-    },
+    alias: [
+      { find: /^xbdesk$/, replacement: fileURLToPath(new URL('./src/index.ts', import.meta.url)) },
+      { find: /^xbdesk\/react-router$/, replacement: fileURLToPath(new URL('./src/adapters/react-router.tsx', import.meta.url)) },
+    ],
   },
   server: { host: '0.0.0.0', port: 5180 },
   build: {
