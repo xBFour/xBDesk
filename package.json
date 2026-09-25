@@ -1,0 +1,54 @@
+{
+  "name": "deskui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Linux masaüstü tarzı web arayüz kiti — React için pencere yöneticisi, masaüstü simgeleri, panel, saat, duvar kağıdı ve tema.",
+  "type": "module",
+  "main": "./dist/deskui.cjs",
+  "module": "./dist/deskui.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/deskui.js",
+      "require": "./dist/deskui.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite --config vite.playground.config.ts",
+    "build": "tsc -p tsconfig.build.json && vite build",
+    "build:playground": "vite build --config vite.playground.config.ts",
+    "build:demo": "vite build --config vite.playground.config.ts --mode singlefile",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "keywords": [
+    "react",
+    "desktop",
+    "window-manager",
+    "linux",
+    "ui-kit",
+    "webtop"
+  ],
+  "devDependencies": {
+    "@types/node": "^22.20.4",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "~5.9",
+    "vite": "^7.3.6",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
