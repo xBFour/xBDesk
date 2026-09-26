@@ -42,7 +42,7 @@ const DB: Order[] = Array.from({ length: 5000 }, (_, i) => ({
   id: i + 1,
   no: `SP-${String(100000 + i * 13).slice(-6)}`,
   customer: CUSTOMERS[(i * 7) % CUSTOMERS.length],
-  date: new Date(2025, 0, 1 + ((i * 37) % 640)),
+  date: new Date(2025, 0, 1 + ((i * 37) % 600)),
   amount: Math.round((250 + ((i * 7919) % 48000)) * 100) / 100,
   status: STATUSES[(i * 3 + (i >> 4)) % STATUSES.length],
 }));
