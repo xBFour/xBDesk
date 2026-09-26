@@ -11,7 +11,7 @@ wallpaper, panel, clock, workspaces — plus the components to build the screens
 ![React 18 · 19](https://img.shields.io/badge/react-18%20%C2%B7%2019-61dafb.svg)
 ![TypeScript](https://img.shields.io/badge/types-TypeScript-3178c6.svg)
 ![Zero dependencies](https://img.shields.io/badge/dependencies-0-2ec27e.svg)
-![Size](https://img.shields.io/badge/gzip-45%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
+![Size](https://img.shields.io/badge/gzip-48%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
 
 **English** · [Türkçe](README.tr.md)
 
@@ -52,7 +52,7 @@ shadcn/ui, MUI…) works just as well.
   </tr>
   <tr>
     <td><img src=".github/assets/settings.webp" alt="Settings app with wallpapers"><br><sub><b>Settings app</b> — wallpaper, theme, accent, panel, workspaces</sub></td>
-    <td><img src=".github/assets/forms.webp" alt="Form with validation, selects, radios and segmented control"><br><sub><b>Forms</b> — labelled fields, validation, selects, radios, switches</sub></td>
+    <td><img src=".github/assets/combobox.webp" alt="Searchable dropdown with chips, groups and highlighted matches"><br><sub><b>Searchable dropdown</b> — server search, chips, groups, highlighted matches</sub></td>
   </tr>
 </table>
 
@@ -73,7 +73,7 @@ shadcn/ui, MUI…) works just as well.
 | | |
 |---|---|
 | Basics | `Button` `IconButton` `Badge` `Card` `Avatar` `Alert` `Progress` `Spinner` `EmptyState` `Toolbar` |
-| Forms | `Field` `Input` `Textarea` `Select` `Checkbox` `Switch` `RadioGroup` `SegmentedControl` |
+| Forms | `Field` `Input` `Textarea` `Select` `Combobox` `Checkbox` `Switch` `RadioGroup` `SegmentedControl` — `Combobox` searches a static list or your server, single or multiple |
 | Dates | `DatePicker` `DateRangePicker` `DateCalendar` — typed input, keyboard, min/max, disabled days, presets |
 | Data | `DataTable` (client-side or server-side) + `useServerTable`, `Pagination`, `Tabs` |
 | Overlays | `Dialog` (window-modal or desktop-wide), `useConfirm`, `Tooltip` |
@@ -270,6 +270,56 @@ export function ReportFilters() {
 Values are local calendar days (`Date` at midnight); `toISODate` / `fromISODate` convert to and
 from `YYYY-MM-DD` for APIs. Users can type dates in their locale's order (`26.09.2026`,
 `09/26/2026`, `26092026`…), use the keyboard, or pick from the calendar.
+
+</details>
+
+<details>
+<summary><b>Searchable dropdown</b> — static lists, server search, multiple values</summary>
+
+```tsx
+import { useState } from 'react';
+import { Combobox, Field, type ComboboxOption } from 'xbdesk';
+
+const cities: ComboboxOption<number>[] = [{ value: 34, label: 'İstanbul' }, { value: 35, label: 'İzmir' }, { value: 63, label: 'Şanlıurfa' }];
+const tags: ComboboxOption[] = [{ value: 'food', label: 'Food', group: 'Retail' }, { value: 'freight', label: 'Freight', group: 'Services' }];
+
+export function Pickers() {
+  const [city, setCity] = useState<number | null>(null);
+  const [customerId, setCustomerId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <>
+      {/* Static list: filtered while typing, ignoring case and accents ("sanliurfa" finds "Şanlıurfa") */}
+      <Field label="City">
+        <Combobox options={cities} value={city} onChange={setCity} placeholder="Pick a city" />
+      </Field>
+
+      {/* Server search: stale requests are aborted, results shown as returned */}
+      <Field label="Customer">
+        <Combobox
+          loadOptions={async (q, signal) => {
+            const res = await fetch(`/api/customers?q=${encodeURIComponent(q)}`, { signal });
+            const rows: Array<{ id: string; name: string; code: string }> = await res.json();
+            return rows.map((c) => ({ value: c.id, label: c.name, description: c.code }));
+          }}
+          value={customerId}
+          onChange={(id) => setCustomerId(id)}
+        />
+      </Field>
+
+      {/* Several values as chips; options with a group get a heading */}
+      <Field label="Tags">
+        <Combobox multiple options={tags} value={selected} onChange={setSelected} />
+      </Field>
+    </>
+  );
+}
+```
+
+Options are `{ value, label, description?, icon?, group?, disabled? }`. With `loadOptions`, pass the
+current selection in `initialOptions` so its label shows before the first search. Keyboard: ↑/↓,
+PageUp/PageDown, Enter, Esc, and Backspace to remove the last chip.
 
 </details>
 

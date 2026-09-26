@@ -11,7 +11,7 @@ duvar kağıdı, panel, saat, çalışma alanları — ve pencerelerin içini ku
 ![React 18 · 19](https://img.shields.io/badge/react-18%20%C2%B7%2019-61dafb.svg)
 ![TypeScript](https://img.shields.io/badge/tipler-TypeScript-3178c6.svg)
 ![Sıfır bağımlılık](https://img.shields.io/badge/ba%C4%9F%C4%B1ml%C4%B1l%C4%B1k-0-2ec27e.svg)
-![Boyut](https://img.shields.io/badge/gzip-45%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
+![Boyut](https://img.shields.io/badge/gzip-48%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
 
 [English](README.md) · **Türkçe**
 
@@ -52,7 +52,7 @@ shadcn/ui, MUI gibi herhangi bir kit de aynı şekilde çalışır.
   </tr>
   <tr>
     <td><img src=".github/assets/settings.webp" alt="Duvar kağıtlarıyla ayarlar uygulaması"><br><sub><b>Ayarlar uygulaması</b> — duvar kağıdı, tema, vurgu rengi, panel, çalışma alanları</sub></td>
-    <td><img src=".github/assets/forms.webp" alt="Doğrulamalı form, açılır liste, seçenek düğmeleri"><br><sub><b>Formlar</b> — etiketli alanlar, doğrulama, açılır liste, seçenekler, anahtarlar</sub></td>
+    <td><img src=".github/assets/combobox.webp" alt="Çipli, gruplu ve eşleşmeleri vurgulayan aranabilir açılır liste"><br><sub><b>Aranabilir açılır liste</b> — sunucudan arama, çipler, gruplar, eşleşme vurgusu</sub></td>
   </tr>
 </table>
 
@@ -73,7 +73,7 @@ shadcn/ui, MUI gibi herhangi bir kit de aynı şekilde çalışır.
 | | |
 |---|---|
 | Temel | `Button` `IconButton` `Badge` `Card` `Avatar` `Alert` `Progress` `Spinner` `EmptyState` `Toolbar` |
-| Form | `Field` `Input` `Textarea` `Select` `Checkbox` `Switch` `RadioGroup` `SegmentedControl` |
+| Form | `Field` `Input` `Textarea` `Select` `Combobox` `Checkbox` `Switch` `RadioGroup` `SegmentedControl` — `Combobox` statik listede ya da sunucunuzda arar, tekli veya çoklu |
 | Tarih | `DatePicker` `DateRangePicker` `DateCalendar` — yazarak giriş, klavye, min/max, kapalı günler, hazır aralıklar |
 | Veri | `DataTable` (istemci ya da sunucu taraflı) + `useServerTable`, `Pagination`, `Tabs` |
 | Katman | `Dialog` (pencere içi ya da masaüstü geneli), `useConfirm`, `Tooltip` |
@@ -270,6 +270,56 @@ export function ReportFilters() {
 Değerler yerel takvim günüdür (gece yarısındaki `Date`); API için `toISODate` / `fromISODate`
 ile `YYYY-MM-DD` biçimine çevrilir. Kullanıcı tarihi kendi dilinin sırasıyla yazabilir
 (`26.09.2026`, `26092026`, `26/9/26`…), klavyeyi kullanabilir ya da takvimden seçebilir.
+
+</details>
+
+<details>
+<summary><b>Aranabilir açılır liste</b> — statik liste, sunucudan arama, çoklu seçim</summary>
+
+```tsx
+import { useState } from 'react';
+import { Combobox, Field, type ComboboxOption } from 'xbdesk';
+
+const cities: ComboboxOption<number>[] = [{ value: 34, label: 'İstanbul' }, { value: 35, label: 'İzmir' }, { value: 63, label: 'Şanlıurfa' }];
+const tags: ComboboxOption[] = [{ value: 'gida', label: 'Gıda', group: 'Perakende' }, { value: 'nakliye', label: 'Nakliye', group: 'Hizmet' }];
+
+export function Pickers() {
+  const [city, setCity] = useState<number | null>(null);
+  const [customerId, setCustomerId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  return (
+    <>
+      {/* Statik liste: yazdıkça süzülür; harf büyüklüğü ve Türkçe karakter fark etmez ("sanliurfa" → "Şanlıurfa") */}
+      <Field label="İl">
+        <Combobox options={cities} value={city} onChange={setCity} placeholder="İl seçin" />
+      </Field>
+
+      {/* Sunucudan arama: eski istekler iptal edilir, sonuçlar geldiği gibi gösterilir */}
+      <Field label="Müşteri">
+        <Combobox
+          loadOptions={async (q, signal) => {
+            const res = await fetch(`/api/customers?q=${encodeURIComponent(q)}`, { signal });
+            const rows: Array<{ id: string; name: string; code: string }> = await res.json();
+            return rows.map((c) => ({ value: c.id, label: c.name, description: c.code }));
+          }}
+          value={customerId}
+          onChange={(id) => setCustomerId(id)}
+        />
+      </Field>
+
+      {/* Birden çok değer, çip olarak; grubu olan seçenekler başlık altında listelenir */}
+      <Field label="Etiketler">
+        <Combobox multiple options={tags} value={selected} onChange={setSelected} />
+      </Field>
+    </>
+  );
+}
+```
+
+Seçenekler `{ value, label, description?, icon?, group?, disabled? }` biçimindedir. `loadOptions`
+kullanırken mevcut seçimi `initialOptions` ile verin; etiketi ilk aramadan önce de görünsün. Klavye:
+↑/↓, PageUp/PageDown, Enter, Esc ve son çipi silmek için Backspace.
 
 </details>
 
