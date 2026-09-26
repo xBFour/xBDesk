@@ -37,7 +37,8 @@
     "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.build.json && vite build",
     "build:playground": "vite build --config vite.playground.config.ts",
     "build:demo": "vite build --config vite.playground.config.ts --mode singlefile",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
