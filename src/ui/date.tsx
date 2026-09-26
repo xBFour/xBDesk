@@ -2,7 +2,6 @@ import {
   forwardRef,
   useEffect,
   useImperativeHandle,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -35,6 +34,7 @@ import {
 } from '../utils/date';
 import { Button } from './basic';
 import { useFieldProps } from './form';
+import { useAnchoredPosition, useOutsidePointerDown } from './popup';
 import { Portal, useControllable, useUiLabels, useUiLocale } from './shared';
 
 export interface DateRange {
@@ -374,46 +374,10 @@ interface DatePopupProps {
 
 /** Floating panel under (or above) the field, in the desktop overlay so windows never clip it. */
 function DatePopup({ anchorRef, popupRef, label, onClose, children }: DatePopupProps) {
-  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
-
-  useLayoutEffect(() => {
-    const place = () => {
-      const a = anchorRef.current?.getBoundingClientRect();
-      const el = popupRef.current;
-      if (!a || !el) return;
-      const w = el.offsetWidth;
-      const h = el.offsetHeight;
-      const gap = 4;
-      const margin = 8;
-      let top = a.bottom + gap;
-      if (top + h > window.innerHeight - margin && a.top - gap - h >= margin) top = a.top - gap - h;
-      top = Math.max(margin, top);
-      const left = Math.max(margin, Math.min(a.left, window.innerWidth - w - margin));
-      setPos((p) => (p && p.left === left && p.top === top ? p : { left, top }));
-    };
-    place();
-    const ro = new ResizeObserver(place);
-    if (popupRef.current) ro.observe(popupRef.current);
-    window.addEventListener('resize', place);
-    window.addEventListener('scroll', place, true);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener('resize', place);
-      window.removeEventListener('scroll', place, true);
-    };
-  }, [anchorRef, popupRef]);
-
-  useEffect(() => {
-    const onDown = (e: PointerEvent) => {
-      const t = e.target as Node;
-      if (popupRef.current?.contains(t) || anchorRef.current?.contains(t)) return;
-      closeRef.current(false);
-    };
-    document.addEventListener('pointerdown', onDown, true);
-    return () => document.removeEventListener('pointerdown', onDown, true);
-  }, [anchorRef, popupRef]);
+  const pos = useAnchoredPosition(anchorRef, popupRef);
+  useOutsidePointerDown([popupRef, anchorRef], () => closeRef.current(false));
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     // Handled here so a surrounding dialog does not close or trap focus.

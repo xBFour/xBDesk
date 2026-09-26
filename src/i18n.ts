@@ -30,6 +30,11 @@ export interface UiLabels {
   selectRow: string;
   loading: string;
   retry: string;
+  noResults: string;
+  typeToSearch: (min: number) => string;
+  moreResults: (count: number) => string;
+  loadFailed: string;
+  showOptions: string;
   chooseDate: string;
   chooseDateRange: string;
   clear: string;
@@ -168,6 +173,11 @@ const en: DesktopLabels = {
     selectRow: 'Select row',
     loading: 'Loading…',
     retry: 'Try again',
+    noResults: 'No results',
+    typeToSearch: (n) => `Type at least ${n} characters to search`,
+    moreResults: (n) => `${n} more — refine your search`,
+    loadFailed: 'Could not load results',
+    showOptions: 'Show options',
     chooseDate: 'Choose date',
     chooseDateRange: 'Choose date range',
     clear: 'Clear',
@@ -273,6 +283,11 @@ const tr: DesktopLabels = {
     selectRow: 'Satırı seç',
     loading: 'Yükleniyor…',
     retry: 'Tekrar dene',
+    noResults: 'Sonuç bulunamadı',
+    typeToSearch: (n) => `Aramak için en az ${n} karakter yazın`,
+    moreResults: (n) => `${n} sonuç daha — aramayı daraltın`,
+    loadFailed: 'Sonuçlar yüklenemedi',
+    showOptions: 'Seçenekleri göster',
     chooseDate: 'Tarih seç',
     chooseDateRange: 'Tarih aralığı seç',
     clear: 'Temizle',
@@ -378,6 +393,11 @@ const de: DesktopLabels = {
     selectRow: 'Zeile auswählen',
     loading: 'Wird geladen…',
     retry: 'Erneut versuchen',
+    noResults: 'Keine Treffer',
+    typeToSearch: (n) => `Mindestens ${n} Zeichen eingeben`,
+    moreResults: (n) => `${n} weitere — Suche eingrenzen`,
+    loadFailed: 'Ergebnisse konnten nicht geladen werden',
+    showOptions: 'Optionen anzeigen',
     chooseDate: 'Datum wählen',
     chooseDateRange: 'Zeitraum wählen',
     clear: 'Leeren',

@@ -147,6 +147,11 @@ export const UploadIcon = (p: P) => (
     <path d="M8 10.5V2.5M4.8 5.5L8 2.3l3.2 3.2M2.5 10.5v2a1 1 0 001 1h9a1 1 0 001-1v-2" />
   </svg>
 );
+export const ChevronDownIcon = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M4 6l4 4 4-4" />
+  </svg>
+);
 export const CalendarIcon = (p: P) => (
   <svg {...base(p)}>
     <rect x="2.5" y="3.5" width="11" height="10" rx="1.5" />

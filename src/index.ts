@@ -75,6 +75,14 @@ export {
 } from './ui/form';
 export { Tooltip, Dialog, useConfirm, type TooltipProps, type DialogProps, type ConfirmOptions } from './ui/overlay';
 export {
+  Combobox,
+  type ComboboxProps,
+  type ComboboxSingleProps,
+  type ComboboxMultipleProps,
+  type ComboboxOption,
+  type ComboboxValue,
+} from './ui/combobox';
+export {
   DateCalendar,
   DatePicker,
   DateRangePicker,
