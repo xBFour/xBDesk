@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, type CSSProperties, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { DesktopConfigContext, WindowLayerContext } from '../context';
 import { detectLocale, resolveLabels, type UiLabels } from '../i18n';
@@ -28,6 +28,22 @@ export function useUiLocale(): string {
   const config = useContext(DesktopConfigContext);
   const scope = useContext(ScopeContext);
   return config?.locale ?? scope?.locale ?? detectLocale();
+}
+
+/** Controlled when `value !== undefined`, otherwise internal state seeded with `defaultValue`. */
+export function useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (value: T) => void): [T, (value: T) => void] {
+  const [inner, setInner] = useState(defaultValue);
+  const controlled = value !== undefined;
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  const set = useCallback(
+    (next: T) => {
+      if (!controlled) setInner(next);
+      onChangeRef.current?.(next);
+    },
+    [controlled],
+  );
+  return [controlled ? value : inner, set];
 }
 
 export type PortalScope = 'window' | 'desktop';

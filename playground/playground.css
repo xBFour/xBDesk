@@ -787,3 +787,30 @@
   flex-direction: column;
   gap: 14px;
 }
+
+/* ------------------------- tarih & sunucu tablosu ------------------------ */
+.demo-dates__values {
+  grid-template-columns: 120px 1fr;
+}
+.demo-dates__values code,
+.demo-dates__picked code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--xbd-hover-bg);
+  font-size: 12.5px;
+}
+.demo-dates__picked {
+  margin: 10px 0 0;
+  color: var(--xbd-muted-fg);
+}
+.demo-server {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.demo-server__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+}

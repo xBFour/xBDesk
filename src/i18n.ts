@@ -28,6 +28,25 @@ export interface UiLabels {
   lastPage: string;
   selectAll: string;
   selectRow: string;
+  loading: string;
+  retry: string;
+  chooseDate: string;
+  chooseDateRange: string;
+  clear: string;
+  today: string;
+  previousMonth: string;
+  nextMonth: string;
+  previousYear: string;
+  nextYear: string;
+  previousYears: string;
+  nextYears: string;
+  chooseMonth: string;
+  chooseYear: string;
+  startDate: string;
+  endDate: string;
+  /** Placeholder letters for typed dates, e.g. `gg.aa.yyyy`. */
+  dateParts: { day: string; month: string; year: string };
+  presets: { today: string; yesterday: string; last7Days: string; last30Days: string; thisMonth: string; lastMonth: string; thisYear: string; lastYear: string };
 }
 
 export interface DesktopLabels {
@@ -147,6 +166,24 @@ const en: DesktopLabels = {
     lastPage: 'Last page',
     selectAll: 'Select all',
     selectRow: 'Select row',
+    loading: 'Loading…',
+    retry: 'Try again',
+    chooseDate: 'Choose date',
+    chooseDateRange: 'Choose date range',
+    clear: 'Clear',
+    today: 'Today',
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+    previousYear: 'Previous year',
+    nextYear: 'Next year',
+    previousYears: 'Earlier years',
+    nextYears: 'Later years',
+    chooseMonth: 'Choose month',
+    chooseYear: 'Choose year',
+    startDate: 'Start date',
+    endDate: 'End date',
+    dateParts: { day: 'dd', month: 'mm', year: 'yyyy' },
+    presets: { today: 'Today', yesterday: 'Yesterday', last7Days: 'Last 7 days', last30Days: 'Last 30 days', thisMonth: 'This month', lastMonth: 'Last month', thisYear: 'This year', lastYear: 'Last year' },
   },
   settings: {
     title: 'Settings',
@@ -234,6 +271,24 @@ const tr: DesktopLabels = {
     lastPage: 'Son sayfa',
     selectAll: 'Tümünü seç',
     selectRow: 'Satırı seç',
+    loading: 'Yükleniyor…',
+    retry: 'Tekrar dene',
+    chooseDate: 'Tarih seç',
+    chooseDateRange: 'Tarih aralığı seç',
+    clear: 'Temizle',
+    today: 'Bugün',
+    previousMonth: 'Önceki ay',
+    nextMonth: 'Sonraki ay',
+    previousYear: 'Önceki yıl',
+    nextYear: 'Sonraki yıl',
+    previousYears: 'Önceki yıllar',
+    nextYears: 'Sonraki yıllar',
+    chooseMonth: 'Ay seç',
+    chooseYear: 'Yıl seç',
+    startDate: 'Başlangıç tarihi',
+    endDate: 'Bitiş tarihi',
+    dateParts: { day: 'gg', month: 'aa', year: 'yyyy' },
+    presets: { today: 'Bugün', yesterday: 'Dün', last7Days: 'Son 7 gün', last30Days: 'Son 30 gün', thisMonth: 'Bu ay', lastMonth: 'Geçen ay', thisYear: 'Bu yıl', lastYear: 'Geçen yıl' },
   },
   settings: {
     title: 'Ayarlar',
@@ -321,6 +376,24 @@ const de: DesktopLabels = {
     lastPage: 'Letzte Seite',
     selectAll: 'Alle auswählen',
     selectRow: 'Zeile auswählen',
+    loading: 'Wird geladen…',
+    retry: 'Erneut versuchen',
+    chooseDate: 'Datum wählen',
+    chooseDateRange: 'Zeitraum wählen',
+    clear: 'Leeren',
+    today: 'Heute',
+    previousMonth: 'Vorheriger Monat',
+    nextMonth: 'Nächster Monat',
+    previousYear: 'Vorheriges Jahr',
+    nextYear: 'Nächstes Jahr',
+    previousYears: 'Frühere Jahre',
+    nextYears: 'Spätere Jahre',
+    chooseMonth: 'Monat wählen',
+    chooseYear: 'Jahr wählen',
+    startDate: 'Startdatum',
+    endDate: 'Enddatum',
+    dateParts: { day: 'TT', month: 'MM', year: 'JJJJ' },
+    presets: { today: 'Heute', yesterday: 'Gestern', last7Days: 'Letzte 7 Tage', last30Days: 'Letzte 30 Tage', thisMonth: 'Dieser Monat', lastMonth: 'Letzter Monat', thisYear: 'Dieses Jahr', lastYear: 'Letztes Jahr' },
   },
   settings: {
     title: 'Einstellungen',

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDesktopConfig } from '../context';
 import { cx } from '../utils';
+import { firstDayOfWeek } from '../utils/date';
 import { ChevronLeftIcon, ChevronRightIcon } from './icons';
 import { PanelButton, PanelPopoverButton, usePanel } from './Panel';
 
@@ -18,17 +19,6 @@ export function useNow(intervalMs = 1000): Date {
     return () => clearTimeout(timer);
   }, [intervalMs]);
   return now;
-}
-
-function firstDayOfWeek(locale: string): number {
-  try {
-    const info = (new Intl.Locale(locale) as unknown as { weekInfo?: { firstDay: number }; getWeekInfo?: () => { firstDay: number } });
-    const wi = info.getWeekInfo?.() ?? info.weekInfo;
-    if (wi) return wi.firstDay % 7;
-  } catch {
-    /* older engines */
-  }
-  return /^en-(US|CA)|^ja|^he|^pt-BR/.test(locale) ? 0 : 1;
 }
 
 export interface CalendarProps {

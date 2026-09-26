@@ -30,6 +30,8 @@ import {
   type DataColumn,
   type Tone,
 } from 'xbdesk';
+import { DatesPage } from './DatesPage';
+import { ServerTablePage } from './ServerTablePage';
 
 // Bileşen galerisi: kitteki her bileşenin çalışan örneği. Veriler örnektir.
 
@@ -381,7 +383,9 @@ function LayoutPage() {
 const PAGES = [
   { id: 'buttons', label: 'Düğmeler ve rozetler', icon: <Icons.CheckIcon />, section: 'Temel', render: () => <ButtonsPage /> },
   { id: 'form', label: 'Form', icon: <Icons.PanelIcon />, section: 'Temel', render: () => <FormPage /> },
+  { id: 'dates', label: 'Tarih seçici', icon: <Icons.CalendarIcon />, section: 'Temel', render: () => <DatesPage /> },
   { id: 'table', label: 'Tablo', icon: <Icons.GridIcon />, section: 'Veri', render: () => <TablePage /> },
+  { id: 'server', label: 'Sunucu tablosu', icon: <Icons.GridIcon />, section: 'Veri', render: () => <ServerTablePage /> },
   { id: 'feedback', label: 'Geri bildirim', icon: <Icons.AlertIcon />, section: 'Veri', render: () => <FeedbackPage /> },
   { id: 'layout', label: 'Kart, sekme, avatar', icon: <Icons.WorkspacesIcon />, section: 'Düzen', render: () => <LayoutPage /> },
 ];

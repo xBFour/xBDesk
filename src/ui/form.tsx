@@ -70,7 +70,7 @@ export function Field({ label, hint, error, required, inline, className, childre
 }
 
 /** Props that connect a control to its surrounding <Field>. */
-function useFieldProps(props: { id?: string; required?: boolean; 'aria-describedby'?: string; 'aria-invalid'?: unknown }, invalid?: boolean) {
+export function useFieldProps(props: { id?: string; required?: boolean; 'aria-describedby'?: string; 'aria-invalid'?: unknown }, invalid?: boolean) {
   const field = useContext(FieldContext);
   return {
     id: props.id ?? field?.id,

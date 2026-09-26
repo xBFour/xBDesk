@@ -763,6 +763,7 @@
 /* ------------------------------ data table ------------------------------ */
 
 .xbd-table-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -1222,4 +1223,286 @@
 }
 .xbd-usermenu__action.is-danger {
   color: var(--xbd-danger);
+}
+
+/* ------------------------------ date picker ----------------------------- */
+
+.xbd-datepicker {
+  width: 100%;
+}
+.xbd-datepicker.is-disabled {
+  opacity: 0.6;
+}
+.xbd-datepicker .xbd-input {
+  font-variant-numeric: tabular-nums;
+}
+.xbd-datepicker__buttons {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2px;
+  padding-right: 4px;
+  color: var(--xbd-muted-fg);
+}
+.xbd-datepicker__buttons .xbd-icon-button:hover {
+  color: var(--xbd-window-fg);
+}
+.xbd-daterange .xbd-input {
+  flex: 1 1 0;
+}
+.xbd-daterange .xbd-input:first-child {
+  padding-right: 2px;
+}
+.xbd-daterange__sep {
+  flex-shrink: 0;
+  color: var(--xbd-muted-fg);
+}
+
+.xbd-datepop {
+  position: fixed;
+  z-index: 1000;
+  padding: 10px;
+  border: 1px solid var(--xbd-border);
+  border-radius: calc(var(--xbd-radius) + 4px);
+  background: var(--xbd-window-bg);
+  color: var(--xbd-window-fg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-family: var(--xbd-font-family);
+  font-size: 13px;
+  animation: xbd-fade-in 0.12s ease-out;
+}
+.xbd-datepop__footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--xbd-border);
+}
+
+.xbd-cal {
+  --xbd-cal-cell: 34px;
+  user-select: none;
+}
+.xbd-cal__months {
+  display: flex;
+  gap: 20px;
+}
+.xbd-cal__head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  margin-bottom: 4px;
+}
+.xbd-cal__title {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 650;
+  text-align: center;
+  cursor: pointer;
+}
+.xbd-cal__title:hover {
+  background: var(--xbd-hover-bg);
+}
+.xbd-cal__title.is-static {
+  line-height: 28px;
+  cursor: default;
+}
+.xbd-cal__title.is-static:hover {
+  background: transparent;
+}
+.xbd-cal__spacer {
+  flex-shrink: 0;
+  width: 28px;
+}
+.xbd-cal__row {
+  display: grid;
+  grid-template-columns: repeat(7, var(--xbd-cal-cell));
+}
+.xbd-cal__weekday {
+  display: grid;
+  place-items: center;
+  height: 26px;
+  color: var(--xbd-muted-fg);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+.xbd-cal__cell {
+  display: grid;
+  place-items: center;
+  height: var(--xbd-cal-cell);
+}
+.xbd-cal__cell.is-in-range {
+  background: var(--xbd-accent-soft);
+}
+.xbd-cal__cell.is-range-start {
+  background: linear-gradient(to right, transparent 50%, var(--xbd-accent-soft) 50%);
+}
+.xbd-cal__cell.is-range-end {
+  background: linear-gradient(to left, transparent 50%, var(--xbd-accent-soft) 50%);
+}
+.xbd-cal__cell.is-preview.is-in-range {
+  background: color-mix(in srgb, var(--xbd-accent) 9%, transparent);
+}
+.xbd-cal__day {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.xbd-cal__day:hover {
+  background: var(--xbd-hover-bg);
+}
+.xbd-cal__day.is-outside {
+  color: var(--xbd-muted-fg);
+  opacity: 0.65;
+}
+.xbd-cal__day.is-today {
+  box-shadow: inset 0 0 0 1px var(--xbd-accent);
+  color: var(--xbd-accent);
+  font-weight: 650;
+}
+.xbd-cal__day.is-selected {
+  box-shadow: none;
+  background: var(--xbd-accent);
+  color: var(--xbd-accent-fg);
+  font-weight: 650;
+  opacity: 1;
+}
+.xbd-cal__day.is-disabled {
+  color: var(--xbd-muted-fg);
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.xbd-cal__day.is-disabled:hover {
+  background: transparent;
+}
+.xbd-cal__picker {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: calc(var(--xbd-cal-cell) * 7);
+  padding-top: 4px;
+}
+.xbd-cal__pick {
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.xbd-cal__pick:hover {
+  background: var(--xbd-hover-bg);
+}
+.xbd-cal__pick.is-current {
+  box-shadow: inset 0 0 0 1px var(--xbd-accent);
+  color: var(--xbd-accent);
+}
+.xbd-cal__pick.is-selected {
+  box-shadow: none;
+  background: var(--xbd-accent);
+  color: var(--xbd-accent-fg);
+}
+.xbd-cal__pick:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.xbd-daterange-pop {
+  display: flex;
+  gap: 12px;
+}
+.xbd-daterange-pop__presets {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 124px;
+  padding-right: 12px;
+  border-right: 1px solid var(--xbd-border);
+}
+.xbd-daterange-pop__preset {
+  height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.xbd-daterange-pop__preset:hover {
+  background: var(--xbd-hover-bg);
+}
+.xbd-daterange-pop__preset.is-active {
+  background: var(--xbd-accent-soft);
+  color: var(--xbd-accent);
+  font-weight: 600;
+}
+@media (max-width: 639px) {
+  .xbd-daterange-pop {
+    flex-direction: column;
+  }
+  .xbd-daterange-pop__presets {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 0 8px;
+    border-right: 0;
+    border-bottom: 1px solid var(--xbd-border);
+  }
+}
+
+/* ------------------------- table: loading / error ------------------------ */
+
+.xbd-table-wrap.is-loading tbody {
+  opacity: 0.5;
+  transition: opacity 0.15s;
+}
+.xbd-table__progress {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 4;
+  height: 2px;
+  overflow: hidden;
+}
+.xbd-table__progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: var(--xbd-accent);
+  animation: xbd-table-progress 1s ease-in-out infinite;
+}
+@keyframes xbd-table-progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+.xbd-table td.xbd-table__state.is-error {
+  color: var(--xbd-danger);
+}
+.xbd-table td.xbd-table__state.is-error .xbd-button {
+  margin-left: 12px;
 }

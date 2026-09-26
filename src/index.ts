@@ -74,7 +74,36 @@ export {
   type SegmentedControlProps,
 } from './ui/form';
 export { Tooltip, Dialog, useConfirm, type TooltipProps, type DialogProps, type ConfirmOptions } from './ui/overlay';
-export { Tabs, Pagination, DataTable, type TabItem, type TabsProps, type PaginationProps, type DataColumn, type DataTableProps, type SortDirection } from './ui/data';
+export {
+  DateCalendar,
+  DatePicker,
+  DateRangePicker,
+  defaultDatePresets,
+  type DateCalendarProps,
+  type DatePickerProps,
+  type DateRangePickerProps,
+  type DateRange,
+  type DateConstraints,
+  type DatePreset,
+} from './ui/date';
+export { toISODate, fromISODate, formatDate, parseDate, compareDay, sameDay, type Weekday } from './utils/date';
+export {
+  Tabs,
+  Pagination,
+  DataTable,
+  useServerTable,
+  type TabItem,
+  type TabsProps,
+  type PaginationProps,
+  type DataColumn,
+  type DataTableProps,
+  type SortDirection,
+  type SortState,
+  type RowKey,
+  type ServerTableQuery,
+  type ServerTablePage,
+  type UseServerTableOptions,
+} from './ui/data';
 export { SidebarLayout, type SidebarItem, type SidebarLayoutProps } from './ui/layout';
 export { LoginScreen, UserMenu, type LoginScreenProps, type LoginUser, type LoginCredentials, type UserMenuProps, type UserMenuAction } from './ui/account';
 
