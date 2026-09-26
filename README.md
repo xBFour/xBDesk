@@ -89,15 +89,15 @@ shadcn/ui, MUI…) works just as well.
 xBDesk is not on npm yet. Install it straight from GitHub (the package builds itself on install):
 
 ```bash
-npm install github:xBFour/xbdesk
+npm install github:xBFour/xBDesk
 ```
 
 or build a tarball and install that — handy for servers without GitHub access:
 
 ```bash
-git clone https://github.com/xBFour/xbdesk && cd xbdesk
+git clone https://github.com/xBFour/xBDesk && cd xBDesk
 npm install && npm pack            # → xbdesk-0.1.0.tgz
-cd ../your-app && npm install ../xbdesk/xbdesk-0.1.0.tgz
+cd ../your-app && npm install ../xBDesk/xbdesk-0.1.0.tgz
 ```
 
 ## Quick start

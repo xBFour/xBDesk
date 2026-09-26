@@ -7,7 +7,7 @@
   "author": "Emrah Dedeoğlu",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xBFour/xbdesk.git"
+    "url": "git+https://github.com/xBFour/xBDesk.git"
   },
   "type": "module",
   "main": "./dist/xbdesk.cjs",

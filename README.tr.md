@@ -89,15 +89,15 @@ shadcn/ui, MUI gibi herhangi bir kit de aynı şekilde çalışır.
 xBDesk henüz npm'de değil. Doğrudan GitHub'dan kurun (paket kurulurken kendini derler):
 
 ```bash
-npm install github:xBFour/xbdesk
+npm install github:xBFour/xBDesk
 ```
 
 ya da bir paket dosyası üretip onu kurun — GitHub erişimi olmayan sunucular için pratik:
 
 ```bash
-git clone https://github.com/xBFour/xbdesk && cd xbdesk
+git clone https://github.com/xBFour/xBDesk && cd xBDesk
 npm install && npm pack            # → xbdesk-0.1.0.tgz
-cd ../uygulamaniz && npm install ../xbdesk/xbdesk-0.1.0.tgz
+cd ../uygulamaniz && npm install ../xBDesk/xbdesk-0.1.0.tgz
 ```
 
 ## Hızlı başlangıç
