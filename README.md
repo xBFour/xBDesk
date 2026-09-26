@@ -13,6 +13,10 @@ wallpaper, panel, clock, workspaces — plus the components to build the screens
 ![Zero dependencies](https://img.shields.io/badge/dependencies-0-2ec27e.svg)
 ![Size](https://img.shields.io/badge/gzip-48%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
 
+[![Live demo](https://img.shields.io/badge/%E2%96%B6%20live%20demo-xbfour.github.io%2FxBDesk-3584e4?style=for-the-badge)](https://xbfour.github.io/xBDesk/)
+
+<sub>Pick a user on the sign-in screen — any password works (<code>hata</code> shows the error state).</sub>
+
 **English** · [Türkçe](README.tr.md)
 
 <img src=".github/assets/demo.gif" alt="Opening apps, snapping a window, a desktop folder, dark mode and the app launcher" width="880">

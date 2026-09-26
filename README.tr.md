@@ -13,6 +13,10 @@ duvar kağıdı, panel, saat, çalışma alanları — ve pencerelerin içini ku
 ![Sıfır bağımlılık](https://img.shields.io/badge/ba%C4%9F%C4%B1ml%C4%B1l%C4%B1k-0-2ec27e.svg)
 ![Boyut](https://img.shields.io/badge/gzip-48%20kB%20JS%20%2B%2010%20kB%20CSS-6f8396.svg)
 
+[![Canlı demo](https://img.shields.io/badge/%E2%96%B6%20canl%C4%B1%20demo-xbfour.github.io%2FxBDesk-3584e4?style=for-the-badge)](https://xbfour.github.io/xBDesk/)
+
+<sub>Giriş ekranında bir kullanıcı seçin — her şifre geçerli (<code>hata</code> yazarsanız hata durumunu görürsünüz).</sub>
+
 [English](README.md) · **Türkçe**
 
 <img src=".github/assets/demo.gif" alt="Uygulama açma, pencereyi kenara yapıştırma, masaüstü klasörü, koyu tema ve uygulama menüsü" width="880">
