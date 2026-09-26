@@ -17,7 +17,7 @@ import { createDesktopController, DEFAULT_PREFERENCES, type DesktopApi } from '.
 import { useStoreSelector } from '../store/store';
 import { localStorageAdapter, sanitizeLoaded } from '../storage';
 import { themeStyle, type ThemeTokenOverrides } from '../theme';
-import type { AppDefinition, ColorScheme, DesktopPreferences, DesktopShortcut, DesktopStorage, MenuEntry, WallpaperPreset } from '../types';
+import type { AppDefinition, ColorScheme, DesktopPreferences, DesktopSession, DesktopShortcut, DesktopStorage, MenuEntry, WallpaperPreset } from '../types';
 import { cx, isTypingTarget } from '../utils';
 import { AppMenuButton } from './AppMenu';
 import { Clock } from './Clock';
@@ -42,6 +42,13 @@ export interface DesktopProps {
   /** Shorthand for `storage={localStorageAdapter(persistKey)}`. */
   persistKey?: string;
   onPreferencesChange?: (preferences: DesktopPreferences) => void;
+  /** Reopen the windows that were open before a reload (needs a storage with sessions). Default `true`. */
+  restoreSession?: boolean;
+  /**
+   * Set to `false` while the app list is still loading (e.g. permissions from a
+   * server); restoring the session waits for it so no window is dropped.
+   */
+  appsReady?: boolean;
   /** BCP 47 locale for built-in labels and dates. Defaults to the browser language. */
   locale?: string;
   labels?: LabelOverrides;
@@ -151,6 +158,8 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
     storage: storageProp,
     persistKey,
     onPreferencesChange,
+    restoreSession = true,
+    appsReady = true,
     locale: localeProp,
     labels: labelOverrides,
     tokens,
@@ -183,7 +192,8 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
       ...(pending ? {} : sanitizeLoaded(loaded as Partial<DesktopPreferences>)),
       ...(colorSchemeProp ? { colorScheme: colorSchemeProp } : {}),
     };
-    return { controller: createDesktopController(initial), pending };
+    const session = restoreSession ? storage?.loadSession?.() : undefined;
+    return { controller: createDesktopController(initial), pending, session };
   });
   const controller = boot.controller;
   // Synchronous so apps are known before any child or parent effect calls openApp().
@@ -234,6 +244,50 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
       flush();
     };
   }, [controller, storage]);
+
+  // Window session: restore once (after the app list is ready), then persist on every change.
+  const sessionReady = useRef(!boot.session);
+  const sessionRestored = useRef(false);
+  useEffect(() => {
+    if (!appsReady || sessionRestored.current || !boot.session) return;
+    sessionRestored.current = true;
+    const apply = (s: DesktopSession | null | undefined) => {
+      controller.restoreSession(s);
+      sessionReady.current = true;
+    };
+    const loaded = boot.session;
+    if (typeof (loaded as Promise<unknown>).then === 'function') {
+      (loaded as Promise<DesktopSession | null | undefined>).then(apply, (err) => {
+        console.warn('[xBDesk] Could not load the window session:', err);
+        sessionReady.current = true;
+      });
+    } else {
+      apply(loaded as DesktopSession | null | undefined);
+    }
+  }, [appsReady, boot, controller]);
+
+  useEffect(() => {
+    if (!restoreSession || !storage?.saveSession) return;
+    const save = () => {
+      if (sessionReady.current) void storage.saveSession?.(controller.getSession());
+    };
+    let last = controller.getState();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const unsubscribe = controller.subscribe(() => {
+      const s = controller.getState();
+      if (s.windows === last.windows && s.stack === last.stack && s.focusedId === last.focusedId && s.activeWorkspace === last.activeWorkspace) return;
+      last = s;
+      clearTimeout(timer);
+      timer = setTimeout(save, 300);
+    });
+    window.addEventListener('pagehide', save);
+    return () => {
+      unsubscribe();
+      clearTimeout(timer);
+      window.removeEventListener('pagehide', save);
+      save();
+    };
+  }, [controller, storage, restoreSession]);
 
   useImperativeHandle(ref, () => controller, [controller]);
 

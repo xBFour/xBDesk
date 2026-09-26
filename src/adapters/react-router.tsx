@@ -73,6 +73,17 @@ export interface RouterAppArgs {
   path?: string;
 }
 
+/** Stores the current route so the window reopens there after a page reload. */
+function RestoreSync() {
+  const location = useLocation();
+  const { setRestoreArgs } = useWindow();
+  const path = location.pathname + location.search + location.hash;
+  useEffect(() => {
+    setRestoreArgs({ path } satisfies RouterAppArgs);
+  }, [path, setRestoreArgs]);
+  return null;
+}
+
 /** Navigates when the app is re-opened (single-instance) with new args. */
 function ArgsNavigator({ args }: { args: RouterAppArgs | undefined }) {
   const navigate = useNavigate();
@@ -108,6 +119,7 @@ export function createRouterApp(options: RouterAppOptions): AppDefinition<Router
     return (
       <WindowRouter initialPath={args?.path ?? path} title={windowTitle}>
         <ArgsNavigator args={args} />
+        <RestoreSync />
         {element}
       </WindowRouter>
     );

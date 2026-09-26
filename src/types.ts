@@ -100,6 +100,8 @@ export interface WindowState {
   bare: boolean;
   /** Incremented to force-remount the content (e.g. after a crash). */
   generation: number;
+  /** Arguments used to reopen this window after a page reload; defaults to `args`. */
+  restoreArgs?: unknown;
 }
 
 /* ------------------------------------------------------------------ */
@@ -166,9 +168,36 @@ export interface DesktopPreferences {
   appBounds: Record<string, Bounds>;
 }
 
+/** A window as stored in a session snapshot. */
+export interface SavedWindow {
+  appId: string;
+  args?: unknown;
+  title: string;
+  bounds: Bounds;
+  maximized: boolean;
+  minimized: boolean;
+  tiled: TileSide | null;
+  workspace: number;
+}
+
+/** Open windows, so they survive a page reload. Only app-backed windows are kept. */
+export interface DesktopSession {
+  version: 1;
+  /** Bottom → top. */
+  windows: SavedWindow[];
+  /** Index in `windows` of the focused window. */
+  focused: number | null;
+  activeWorkspace: number;
+}
+
+type MaybePromise<T> = T | Promise<T>;
+
 export interface DesktopStorage {
-  load(): Partial<DesktopPreferences> | null | undefined | Promise<Partial<DesktopPreferences> | null | undefined>;
+  load(): MaybePromise<Partial<DesktopPreferences> | null | undefined>;
   save(preferences: DesktopPreferences): void | Promise<void>;
+  /** Optional: enables restoring open windows after a reload. */
+  loadSession?(): MaybePromise<DesktopSession | null | undefined>;
+  saveSession?(session: DesktopSession): void | Promise<void>;
 }
 
 /* ------------------------------------------------------------------ */

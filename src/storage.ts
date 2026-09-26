@@ -1,8 +1,24 @@
-import type { DesktopPreferences, DesktopStorage } from './types';
+import type { DesktopPreferences, DesktopSession, DesktopStorage } from './types';
 
-/** Persists preferences in `localStorage` under `key`. */
+/** Persists preferences in `localStorage` under `key`, and the open windows under `key:session`. */
 export function localStorageAdapter(key: string): DesktopStorage {
+  const sessionKey = `${key}:session`;
   return {
+    loadSession() {
+      try {
+        const raw = localStorage.getItem(sessionKey);
+        return raw ? (JSON.parse(raw) as DesktopSession) : null;
+      } catch {
+        return null;
+      }
+    },
+    saveSession(session) {
+      try {
+        localStorage.setItem(sessionKey, JSON.stringify(session));
+      } catch (err) {
+        console.warn('[xBDesk] Could not persist the window session:', err);
+      }
+    },
     load() {
       try {
         const raw = localStorage.getItem(key);

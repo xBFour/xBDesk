@@ -4,7 +4,7 @@ import { HOME, basename, readFile, writeFile } from '../fs';
 
 export function TextEditorApp({ args }: AppComponentProps<{ path?: string }>) {
   const api = useDesktop();
-  const { setTitle } = useWindow();
+  const { setTitle, setRestoreArgs } = useWindow();
   const [path, setPath] = useState<string | null>(args?.path ?? null);
   const [text, setText] = useState(() => (args?.path ? readFile(args.path) ?? '' : ''));
   const [saved, setSaved] = useState(text);
@@ -16,6 +16,11 @@ export function TextEditorApp({ args }: AppComponentProps<{ path?: string }>) {
   useEffect(() => {
     setTitle(`${dirty ? '● ' : ''}${name} — Metin Düzenleyici`);
   }, [dirty, name, setTitle]);
+
+  // Yeni belge ilk kez kaydedilince yenilemede o dosyayla açılsın.
+  useEffect(() => {
+    if (path) setRestoreArgs({ path });
+  }, [path, setRestoreArgs]);
 
   // Kaydedilmemiş değişiklik varsa kapatmadan önce pencere içinde onay iste (asenkron guard).
   useCloseGuard(() => {

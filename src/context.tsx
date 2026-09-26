@@ -73,6 +73,8 @@ export interface WindowHandle {
   toggleMaximize(): void;
   focus(): void;
   setTitle(title: string): void;
+  /** Arguments to reopen this window with after a page reload (e.g. the current folder or route). */
+  setRestoreArgs(args: unknown): void;
 }
 
 /** Inside an app window: access and control the hosting window. */
@@ -90,6 +92,7 @@ export function useWindow<A = unknown>(): WindowHandle & { args: A } {
       toggleMaximize: () => api.toggleMaximize(id),
       focus: () => api.focusWindow(id),
       setTitle: (title: string) => api.setWindowTitle(id, title),
+      setRestoreArgs: (args: unknown) => api.setRestoreArgs(id, args),
     }),
     [api, id],
   );

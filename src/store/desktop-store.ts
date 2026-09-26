@@ -2,6 +2,7 @@ import type {
   AppDefinition,
   Bounds,
   DesktopNotification,
+  DesktopSession,
   DesktopPreferences,
   MenuEntry,
   NotificationInput,
@@ -9,6 +10,7 @@ import type {
   Size,
   TileSide,
   Wallpaper,
+  SavedWindow,
   WindowOptions,
   WindowState,
 } from '../types';
@@ -73,6 +75,13 @@ export interface DesktopApi {
   reloadWindow(id: string): void;
   /** Task-bar semantics: minimise when focused, otherwise restore and focus. */
   activateWindow(id: string): void;
+  /** Arguments to reopen this window with after a page reload (defaults to its launch args). */
+  setRestoreArgs(id: string, args: unknown): void;
+
+  /** Snapshot of the open app windows (what gets persisted between reloads). */
+  getSession(): DesktopSession;
+  /** Reopens the windows of a snapshot; windows of unknown apps are skipped. */
+  restoreSession(session: DesktopSession | null | undefined): void;
 
   switchWorkspace(workspace: number): void;
   toggleShowDesktop(): void;
@@ -124,6 +133,24 @@ function topVisible(s: DesktopState, workspace = s.activeWorkspace, exclude?: st
 
 function raise(stack: string[], id: string): string[] {
   return [...stack.filter((x) => x !== id), id];
+}
+
+const INVALID = Symbol('invalid');
+
+/** JSON round-trip; windows whose args cannot be stored are left out of the session. */
+function storable(value: unknown): unknown {
+  if (value === undefined) return undefined;
+  try {
+    return JSON.parse(JSON.stringify(value));
+  } catch {
+    return INVALID;
+  }
+}
+
+function validBounds(b: unknown): Bounds | null {
+  const o = b as Partial<Bounds> | null;
+  if (!o || ![o.x, o.y, o.width, o.height].every((n) => typeof n === 'number' && Number.isFinite(n))) return null;
+  return { x: o.x!, y: o.y!, width: Math.max(1, o.width!), height: Math.max(1, o.height!) };
 }
 
 function fallbackViewport(): Size {
@@ -410,6 +437,85 @@ export function createDesktopController(initialPreferences: DesktopPreferences):
       } else {
         api.focusWindow(id);
       }
+    },
+
+    setRestoreArgs(id, args) {
+      const w = store.get().windows[id];
+      if (!w) return;
+      const next = storable(args);
+      if (next === INVALID || JSON.stringify(next) === JSON.stringify(w.restoreArgs)) return;
+      updateWindow(id, { restoreArgs: next });
+    },
+
+    getSession() {
+      const s = store.get();
+      const windows: SavedWindow[] = [];
+      let focused: number | null = null;
+      for (const id of s.stack) {
+        const w = s.windows[id];
+        if (!w || !w.appId) continue; // ad-hoc windows carry React content and cannot be restored
+        const args = storable(w.restoreArgs !== undefined ? w.restoreArgs : w.args);
+        if (args === INVALID) continue;
+        if (id === s.focusedId) focused = windows.length;
+        windows.push({
+          appId: w.appId,
+          args,
+          title: w.title,
+          bounds: w.bounds,
+          maximized: w.maximized,
+          minimized: w.minimized,
+          tiled: w.tiled,
+          workspace: w.workspace,
+        });
+      }
+      return { version: 1, windows, focused, activeWorkspace: s.activeWorkspace };
+    },
+
+    restoreSession(session) {
+      if (!session || session.version !== 1 || !Array.isArray(session.windows)) return;
+      const s = store.get();
+      const last = s.preferences.workspaces - 1;
+      const windows = { ...s.windows };
+      const stack = [...s.stack];
+      let focusedId: string | null = null;
+      session.windows.forEach((saved, index) => {
+        const app = saved && appMap.get(saved.appId);
+        if (!app) return; // app removed, or no longer permitted
+        if (app.singleInstance !== false && Object.values(windows).some((w) => w.appId === app.id)) return;
+        const opts = app.window ?? {};
+        const vp = s.viewport.width ? s.viewport : fallbackViewport();
+        const size = fitInto({ width: opts.width ?? 720, height: opts.height ?? 480 }, vp);
+        const id = uid('win');
+        windows[id] = {
+          id,
+          appId: app.id,
+          title: typeof saved.title === 'string' && saved.title ? saved.title : app.title,
+          icon: app.icon,
+          args: saved.args,
+          restoreArgs: saved.args,
+          content: undefined,
+          bounds: validBounds(saved.bounds) ?? { x: Math.round((vp.width - size.width) / 2), y: 24, ...size },
+          maximized: !!saved.maximized,
+          minimized: !!saved.minimized,
+          tiled: saved.tiled === 'left' || saved.tiled === 'right' ? saved.tiled : null,
+          workspace: clamp(Math.round(Number(saved.workspace) || 0), 0, last),
+          resizable: opts.resizable !== false,
+          minimizable: opts.minimizable !== false,
+          maximizable: opts.maximizable !== false,
+          minWidth: opts.minWidth ?? 240,
+          minHeight: opts.minHeight ?? 160,
+          className: opts.className,
+          bare: !!opts.bare,
+          generation: 0,
+        };
+        stack.push(id);
+        if (session.focused === index) focusedId = id;
+      });
+      const activeWorkspace = clamp(Math.round(Number(session.activeWorkspace) || 0), 0, last);
+      const next = { ...s, windows, stack, activeWorkspace };
+      const f = focusedId ? windows[focusedId] : null;
+      if (!f || f.minimized || f.workspace !== activeWorkspace) focusedId = topVisible(next);
+      store.set({ windows, stack, activeWorkspace, focusedId });
     },
 
     switchWorkspace(workspace) {

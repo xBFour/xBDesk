@@ -173,7 +173,7 @@ export function WorkspaceSwitcher({ alwaysShow }: WorkspaceSwitcherProps) {
         <button
           key={i}
           type="button"
-          className={cx('xbd-workspaces__item', i === active && 'is-active')}
+          className={cx('xbd-workspaces__item', i === active && 'is-active', (perWorkspace[i] ?? 0) > 0 && 'has-windows')}
           aria-pressed={i === active}
           aria-label={labels.workspace(i + 1)}
           title={labels.workspace(i + 1)}

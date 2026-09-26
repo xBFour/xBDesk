@@ -399,23 +399,23 @@
   padding: 4px 0;
 }
 .xbd-workspaces__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
+  position: relative;
+  display: grid;
+  place-items: center;
   width: 30px;
   height: 26px;
   padding: 0;
   border: 1px solid var(--xbd-border);
-  border-radius: 6px;
+  border-radius: 7px;
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
 }
 .xbd-workspaces__item:hover {
   background: var(--xbd-hover-bg);
@@ -425,17 +425,30 @@
   border-color: transparent;
   color: var(--xbd-accent-fg);
 }
+/* Numara her zaman tam ortada; pencere noktaları düzeni itmeden alt kenarda durur. */
+.xbd-workspaces__num {
+  transform: translateY(-0.5px);
+}
+.xbd-workspaces__item.has-windows .xbd-workspaces__num {
+  transform: translateY(-3px);
+}
 .xbd-workspaces__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3.5px;
   display: flex;
+  justify-content: center;
   gap: 2px;
   height: 3px;
+  pointer-events: none;
 }
 .xbd-workspaces__dots i {
   width: 3px;
   height: 3px;
   border-radius: 50%;
   background: currentColor;
-  opacity: 0.8;
+  opacity: 0.75;
 }
 
 /* Clock */

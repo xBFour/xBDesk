@@ -21,7 +21,7 @@ function iconFor(n: FsNode) {
 export function FilesApp({ args }: AppComponentProps<{ path?: string }>) {
   useFsVersion();
   const api = useDesktop();
-  const { setTitle } = useWindow();
+  const { setTitle, setRestoreArgs } = useWindow();
   const menu = useContextMenu();
   const [history, setHistory] = useState<string[]>([args?.path ?? HOME]);
   const [index, setIndex] = useState(0);
@@ -37,7 +37,9 @@ export function FilesApp({ args }: AppComponentProps<{ path?: string }>) {
 
   useEffect(() => {
     setTitle(`${basename(cwd) === 'kullanici' ? 'Ev' : basename(cwd)} — Dosyalar`);
-  }, [cwd, setTitle]);
+    // Sayfa yenilenince pencere bu klasörde açılsın.
+    setRestoreArgs({ path: cwd });
+  }, [cwd, setTitle, setRestoreArgs]);
 
   function go(path: string) {
     const p = normalize(path);
