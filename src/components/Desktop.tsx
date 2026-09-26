@@ -76,7 +76,10 @@ export interface DesktopProps {
   compactBreakpoint?: number;
   /** Ctrl+Alt+←/→ switches workspaces. Default `true`. */
   keyboardShortcuts?: boolean;
-  /** Cover the viewport (`position: fixed`) instead of filling the parent. */
+  /**
+   * Cover the viewport (`position: fixed`). Default `true`. Set `false` to fill
+   * the parent element instead — the parent then needs a height of its own.
+   */
   fullscreen?: boolean;
   className?: string;
   style?: CSSProperties;
@@ -175,7 +178,7 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
     showIcons = true,
     compactBreakpoint = 640,
     keyboardShortcuts = true,
-    fullscreen,
+    fullscreen = true,
     className,
     style,
     onReady,
@@ -329,6 +332,17 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
   const rootRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const widgetLayerRef = useRef<HTMLDivElement>(null);
+
+  // Filling a parent without a height collapses the desktop to 0px — a blank page with no error.
+  useEffect(() => {
+    if (fullscreen) return;
+    const frame = requestAnimationFrame(() => {
+      if (rootRef.current && rootRef.current.clientHeight === 0) {
+        console.warn('[xBDesk] <Desktop fullscreen={false}> has no height: give its parent element a height, or remove fullscreen={false}.');
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [fullscreen]);
 
   const config = useMemo<DesktopConfig>(
     () => ({

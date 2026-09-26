@@ -61,7 +61,10 @@ export interface AppDefinition<A = any> {
   window?: WindowOptions;
   /** Focus the existing window instead of opening a new one. Default `true`. */
   singleInstance?: boolean;
-  /** Default `true`. */
+  /**
+   * Own desktop icon. By default the app gets one unless a folder or a shortcut
+   * (without `args`) already points to it. `true` always shows it, `false` never.
+   */
   showOnDesktop?: boolean;
   /** Default `true`. */
   showInMenu?: boolean;

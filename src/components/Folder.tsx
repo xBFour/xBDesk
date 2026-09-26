@@ -51,6 +51,20 @@ export function resolveItems(items: Array<string | DesktopShortcut>, apps: AppDe
   return out;
 }
 
+/**
+ * Apps already reachable from a desktop item: folder entries (at any depth) and
+ * shortcuts that simply open the app. Shortcuts with `args` are documents and
+ * do not count — the app keeps its own icon next to them.
+ */
+export function shortcutAppIds(shortcuts: Array<string | DesktopShortcut>, out = new Set<string>()): Set<string> {
+  for (const s of shortcuts) {
+    if (typeof s === 'string') out.add(s);
+    else if (s.items) shortcutAppIds(s.items, out);
+    else if (s.appId && s.args === undefined && !s.onOpen) out.add(s.appId);
+  }
+  return out;
+}
+
 export function openFolder(api: DesktopApi, id: string): void {
   const existing = Object.values(api.getState().windows).find((w) => w.appId === FOLDER_APP_ID && (w.args as { id?: string } | undefined)?.id === id);
   if (existing) api.focusWindow(existing.id);

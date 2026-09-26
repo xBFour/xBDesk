@@ -210,10 +210,10 @@ function DemoDesktop(session: SessionActions) {
     () => [
       { id: 'welcome', title: 'Hoş geldiniz', icon: WelcomeIcon, component: WelcomeApp, category: 'Başlangıç', window: { width: 700, height: 580 } },
       { id: 'files', title: 'Dosyalar', icon: FilesIcon, component: FilesApp, category: 'Donatılar', keywords: ['dosya', 'klasör', 'files'], window: { width: 820, height: 520, minWidth: 460, bare: true } },
-      { id: 'terminal', showOnDesktop: false, title: 'Terminal', icon: TerminalIcon, component: TerminalApp, category: 'Sistem', singleInstance: false, keywords: ['konsol', 'shell'], window: { width: 720, height: 440, bare: true } },
-      { id: 'editor', showOnDesktop: false, title: 'Metin Düzenleyici', icon: EditorIcon, component: TextEditorApp, category: 'Donatılar', singleInstance: false, keywords: ['not', 'text'], window: { width: 680, height: 500, bare: true } },
-      { id: 'calculator', showOnDesktop: false, title: 'Hesap Makinesi', icon: CalculatorIcon, component: CalculatorApp, category: 'Donatılar', window: { width: 320, height: 480, resizable: false, maximizable: false, bare: true } },
-      { id: 'monitor', showOnDesktop: false, title: 'Sistem İzleyici', icon: MonitorIcon, component: SystemMonitorApp, category: 'Sistem', window: { width: 560, height: 540 } },
+      { id: 'terminal', title: 'Terminal', icon: TerminalIcon, component: TerminalApp, category: 'Sistem', singleInstance: false, keywords: ['konsol', 'shell'], window: { width: 720, height: 440, bare: true } },
+      { id: 'editor', title: 'Metin Düzenleyici', icon: EditorIcon, component: TextEditorApp, category: 'Donatılar', singleInstance: false, keywords: ['not', 'text'], window: { width: 680, height: 500, bare: true } },
+      { id: 'calculator', title: 'Hesap Makinesi', icon: CalculatorIcon, component: CalculatorApp, category: 'Donatılar', window: { width: 320, height: 480, resizable: false, maximizable: false, bare: true } },
+      { id: 'monitor', title: 'Sistem İzleyici', icon: MonitorIcon, component: SystemMonitorApp, category: 'Sistem', window: { width: 560, height: 540 } },
       {
         ...createSettingsApp({
         title: 'Ayarlar',
@@ -232,7 +232,6 @@ function DemoDesktop(session: SessionActions) {
           },
         ],
         }),
-        showOnDesktop: false,
       },
       createRouterApp({
         id: 'contacts',
@@ -251,7 +250,7 @@ function DemoDesktop(session: SessionActions) {
       }),
       { id: 'components', title: 'Bileşenler', icon: ComponentsIcon, component: ComponentsApp, category: 'Başlangıç', keywords: ['component', 'ui', 'tablo', 'form'], window: { width: 1040, height: 680, minWidth: 560, bare: true } },
       { id: 'profile', title: 'Profil', component: ProfileApp, category: 'Sistem', showOnDesktop: false, keywords: ['hesap', 'şifre', 'kullanıcı'], window: { width: 760, height: 640, minWidth: 480 } },
-      { id: 'crash', title: 'Çökme testi', component: CrashApp, category: 'Geliştirici', showOnDesktop: false, window: { width: 420, height: 260 } },
+      { id: 'crash', title: 'Çökme testi', component: CrashApp, category: 'Geliştirici', window: { width: 420, height: 260 } },
     ],
     [],
   );

@@ -4,7 +4,7 @@ import type { DesktopController } from '../store/desktop-store';
 import type { Bounds, GridCell, IconSize, IconSource, MenuEntry } from '../types';
 import { cellKey, clamp, cx, nearestFreeCell, rectsIntersect } from '../utils';
 import { AppIcon } from './AppIcon';
-import { FolderGlyph, openShortcut, resolveItems } from './Folder';
+import { FolderGlyph, openShortcut, resolveItems, shortcutAppIds } from './Folder';
 import { GridIcon, ImageIcon, MoonIcon, SunIcon } from './icons';
 
 export const ICON_METRICS: Record<IconSize, { w: number; h: number; icon: number }> = {
@@ -64,10 +64,11 @@ export function DesktopIcons() {
   const stored = useDesktopState((s) => s.preferences.iconPositions, Object.is);
   const viewport = useDesktopState((s) => s.viewport);
 
-  const items = useMemo<Item[]>(
-    () => [
+  const items = useMemo<Item[]>(() => {
+    const reachable = shortcutAppIds(shortcuts);
+    return [
       ...apps
-        .filter((a) => a.showOnDesktop !== false)
+        .filter((a) => a.showOnDesktop ?? !reachable.has(a.id))
         .map((a) => ({ id: a.id, title: a.title, icon: a.icon, open: () => void api.openApp(a.id) })),
       ...shortcuts.map((s) => ({
         id: s.id,
@@ -75,9 +76,8 @@ export function DesktopIcons() {
         icon: s.icon ?? (s.items ? <FolderGlyph items={resolveItems(s.items, apps)} color={s.color} /> : s.appId ? api.getApp(s.appId)?.icon : undefined),
         open: () => openShortcut(api, s),
       })),
-    ],
-    [apps, shortcuts, api],
-  );
+    ];
+  }, [apps, shortcuts, api]);
 
   const m = ICON_METRICS[iconSize];
   const cols = Math.max(1, Math.floor((viewport.width - PAD * 2) / m.w));
