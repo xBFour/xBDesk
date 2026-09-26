@@ -3,6 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "description": "Linux masaüstü tarzı web arayüz kiti — React için pencere yöneticisi, masaüstü simgeleri, panel, saat, duvar kağıdı ve tema.",
+  "license": "MIT",
+  "author": "Emrah Dedeoğlu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xBFour/xbdesk.git"
+  },
   "type": "module",
   "main": "./dist/xbdesk.cjs",
   "module": "./dist/xbdesk.js",

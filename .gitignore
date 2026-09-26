@@ -1,2 +1,7 @@
+node_modules/
+dist/
 dist-demo/
 dist-playground/
+*.tgz
+*.log
+.DS_Store
