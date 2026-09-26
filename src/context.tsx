@@ -27,6 +27,8 @@ export interface DesktopConfig {
 export const DesktopContext = createContext<DesktopController | null>(null);
 export const DesktopConfigContext = createContext<DesktopConfig | null>(null);
 export const WindowContext = createContext<string | null>(null);
+/** Overlay element inside the current window (window-modal dialogs render here). */
+export const WindowLayerContext = createContext<HTMLElement | null>(null);
 
 export function useDesktopController(): DesktopController {
   const ctx = useContext(DesktopContext);

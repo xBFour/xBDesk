@@ -111,12 +111,17 @@ export interface WindowState {
 export interface DesktopShortcut {
   id: string;
   title: string;
+  /** Folders without an icon show a preview of their first four items. */
   icon?: IconSource;
   /** Opens this app (with `args`) when activated. */
   appId?: string;
   args?: unknown;
   /** Custom activation handler; takes precedence over `appId`. */
   onOpen?: () => void;
+  /** Makes this a folder (group): items open from a folder window. Strings are app ids. */
+  items?: Array<string | DesktopShortcut>;
+  /** Folder tint. */
+  color?: string;
 }
 
 /* ------------------------------------------------------------------ */

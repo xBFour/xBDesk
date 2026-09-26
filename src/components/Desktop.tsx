@@ -22,6 +22,7 @@ import { cx, isTypingTarget } from '../utils';
 import { AppMenuButton } from './AppMenu';
 import { Clock } from './Clock';
 import { DesktopIcons } from './DesktopIcons';
+import { folderApp } from './Folder';
 import { ContextMenuHost } from './Menu';
 import { Notifications } from './Notifications';
 import { ColorSchemeToggle, Panel, ShowDesktopButton, SystemTray, WindowList, WorkspaceSwitcher } from './Panel';
@@ -196,8 +197,10 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
     return { controller: createDesktopController(initial), pending, session };
   });
   const controller = boot.controller;
+  // The built-in folder app is always registered next to the consumer's apps.
+  const allApps = useMemo(() => [...apps, folderApp as AppDefinition], [apps]);
   // Synchronous so apps are known before any child or parent effect calls openApp().
-  controller.setApps(apps);
+  controller.setApps(allApps);
 
   const readyToSave = useRef(!boot.pending);
   useEffect(() => {
@@ -329,7 +332,7 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
 
   const config = useMemo<DesktopConfig>(
     () => ({
-      apps,
+      apps: allApps,
       shortcuts,
       wallpapers,
       labels,
@@ -345,7 +348,7 @@ export const Desktop = forwardRef<DesktopApi, DesktopProps>(function Desktop(pro
       overlayRef,
       widgetLayerRef,
     }),
-    [apps, shortcuts, wallpapers, labels, locale, windowButtons, titleAlign, iconsAlign, openIconsWith, settingsAppId, desktopMenu, resolvedScheme],
+    [allApps, shortcuts, wallpapers, labels, locale, windowButtons, titleAlign, iconsAlign, openIconsWith, settingsAppId, desktopMenu, resolvedScheme],
   );
 
   const onKeyDown = (e: KeyboardEvent) => {

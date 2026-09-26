@@ -120,3 +120,13 @@ export const ContactsIcon = (
     <path d="M16 35c1.5-5.5 5.5-8 10-8s8.5 2.5 10 8z" fill="#fff" />
   </Svg>
 );
+
+export const ComponentsIcon = (
+  <Svg>
+    <rect x="4" y="4" width="40" height="40" rx="10" fill="#26303f" />
+    <rect x="10" y="10" width="13" height="13" rx="3" fill="#4a90e2" />
+    <rect x="25" y="10" width="13" height="13" rx="6.5" fill="#f6a623" />
+    <rect x="10" y="25" width="13" height="13" rx="3" fill="#2ec27e" />
+    <path d="M31.5 25l6.5 11.5H25z" fill="#e0533d" />
+  </Svg>
+);

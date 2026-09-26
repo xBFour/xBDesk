@@ -4,6 +4,7 @@ import type { DesktopController } from '../store/desktop-store';
 import type { Bounds, GridCell, IconSize, IconSource, MenuEntry } from '../types';
 import { cellKey, clamp, cx, nearestFreeCell, rectsIntersect } from '../utils';
 import { AppIcon } from './AppIcon';
+import { FolderGlyph, openShortcut, resolveItems } from './Folder';
 import { GridIcon, ImageIcon, MoonIcon, SunIcon } from './icons';
 
 export const ICON_METRICS: Record<IconSize, { w: number; h: number; icon: number }> = {
@@ -71,11 +72,8 @@ export function DesktopIcons() {
       ...shortcuts.map((s) => ({
         id: s.id,
         title: s.title,
-        icon: s.icon ?? (s.appId ? api.getApp(s.appId)?.icon : undefined),
-        open: () => {
-          if (s.onOpen) s.onOpen();
-          else if (s.appId) api.openApp(s.appId, s.args);
-        },
+        icon: s.icon ?? (s.items ? <FolderGlyph items={resolveItems(s.items, apps)} color={s.color} /> : s.appId ? api.getApp(s.appId)?.icon : undefined),
+        open: () => openShortcut(api, s),
       })),
     ],
     [apps, shortcuts, api],

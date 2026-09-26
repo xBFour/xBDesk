@@ -1,3 +1,35 @@
+/** Strings used by the component library (buttons, tables, login screen…). */
+export interface UiLabels {
+  close: string;
+  cancel: string;
+  confirm: string;
+  remove: string;
+  username: string;
+  password: string;
+  showPassword: string;
+  hidePassword: string;
+  signIn: string;
+  signingIn: string;
+  unlock: string;
+  rememberMe: string;
+  loginFailed: string;
+  otherUser: string;
+  profile: string;
+  settings: string;
+  lock: string;
+  logout: string;
+  noRows: string;
+  rowsPerPage: string;
+  range: (from: number, to: number, total: number) => string;
+  pageOf: (page: number, pages: number) => string;
+  firstPage: string;
+  previousPage: string;
+  nextPage: string;
+  lastPage: string;
+  selectAll: string;
+  selectRow: string;
+}
+
 export interface DesktopLabels {
   minimize: string;
   maximize: string;
@@ -23,9 +55,12 @@ export interface DesktopLabels {
   reload: string;
   dismiss: string;
   loading: string;
+  back: string;
+  emptyFolder: string;
   today: string;
   previousMonth: string;
   nextMonth: string;
+  ui: UiLabels;
   settings: {
     title: string;
     background: string;
@@ -78,9 +113,41 @@ const en: DesktopLabels = {
   reload: 'Reload',
   dismiss: 'Dismiss',
   loading: 'Loading…',
+  back: 'Back',
+  emptyFolder: 'This folder is empty',
   today: 'Today',
   previousMonth: 'Previous month',
   nextMonth: 'Next month',
+  ui: {
+    close: 'Close',
+    cancel: 'Cancel',
+    confirm: 'OK',
+    remove: 'Remove',
+    username: 'Username',
+    password: 'Password',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
+    signIn: 'Sign in',
+    signingIn: 'Signing in…',
+    unlock: 'Unlock',
+    rememberMe: 'Remember me',
+    loginFailed: 'Sign-in failed. Check your username and password.',
+    otherUser: 'Other user',
+    profile: 'Profile',
+    settings: 'Settings',
+    lock: 'Lock screen',
+    logout: 'Log out',
+    noRows: 'No records',
+    rowsPerPage: 'Rows per page',
+    range: (a, b, t) => `${a}–${b} of ${t}`,
+    pageOf: (p, n) => `Page ${p} of ${n}`,
+    firstPage: 'First page',
+    previousPage: 'Previous page',
+    nextPage: 'Next page',
+    lastPage: 'Last page',
+    selectAll: 'Select all',
+    selectRow: 'Select row',
+  },
   settings: {
     title: 'Settings',
     background: 'Background',
@@ -133,9 +200,41 @@ const tr: DesktopLabels = {
   reload: 'Yeniden yükle',
   dismiss: 'Kapat',
   loading: 'Yükleniyor…',
+  back: 'Geri',
+  emptyFolder: 'Bu klasör boş',
   today: 'Bugün',
   previousMonth: 'Önceki ay',
   nextMonth: 'Sonraki ay',
+  ui: {
+    close: 'Kapat',
+    cancel: 'Vazgeç',
+    confirm: 'Tamam',
+    remove: 'Kaldır',
+    username: 'Kullanıcı adı',
+    password: 'Şifre',
+    showPassword: 'Şifreyi göster',
+    hidePassword: 'Şifreyi gizle',
+    signIn: 'Giriş yap',
+    signingIn: 'Giriş yapılıyor…',
+    unlock: 'Kilidi aç',
+    rememberMe: 'Beni hatırla',
+    loginFailed: 'Giriş yapılamadı. Kullanıcı adını ve şifreyi kontrol edin.',
+    otherUser: 'Başka kullanıcı',
+    profile: 'Profil',
+    settings: 'Ayarlar',
+    lock: 'Ekranı kilitle',
+    logout: 'Çıkış yap',
+    noRows: 'Kayıt yok',
+    rowsPerPage: 'Sayfa başına',
+    range: (a, b, t) => `${t} kayıttan ${a}–${b}`,
+    pageOf: (p, n) => `Sayfa ${p} / ${n}`,
+    firstPage: 'İlk sayfa',
+    previousPage: 'Önceki sayfa',
+    nextPage: 'Sonraki sayfa',
+    lastPage: 'Son sayfa',
+    selectAll: 'Tümünü seç',
+    selectRow: 'Satırı seç',
+  },
   settings: {
     title: 'Ayarlar',
     background: 'Arka plan',
@@ -188,9 +287,41 @@ const de: DesktopLabels = {
   reload: 'Neu laden',
   dismiss: 'Schließen',
   loading: 'Wird geladen…',
+  back: 'Zurück',
+  emptyFolder: 'Dieser Ordner ist leer',
   today: 'Heute',
   previousMonth: 'Vorheriger Monat',
   nextMonth: 'Nächster Monat',
+  ui: {
+    close: 'Schließen',
+    cancel: 'Abbrechen',
+    confirm: 'OK',
+    remove: 'Entfernen',
+    username: 'Benutzername',
+    password: 'Passwort',
+    showPassword: 'Passwort anzeigen',
+    hidePassword: 'Passwort verbergen',
+    signIn: 'Anmelden',
+    signingIn: 'Anmeldung läuft…',
+    unlock: 'Entsperren',
+    rememberMe: 'Angemeldet bleiben',
+    loginFailed: 'Anmeldung fehlgeschlagen. Benutzername und Passwort prüfen.',
+    otherUser: 'Anderer Benutzer',
+    profile: 'Profil',
+    settings: 'Einstellungen',
+    lock: 'Bildschirm sperren',
+    logout: 'Abmelden',
+    noRows: 'Keine Einträge',
+    rowsPerPage: 'Zeilen pro Seite',
+    range: (a, b, t) => `${a}–${b} von ${t}`,
+    pageOf: (p, n) => `Seite ${p} von ${n}`,
+    firstPage: 'Erste Seite',
+    previousPage: 'Vorherige Seite',
+    nextPage: 'Nächste Seite',
+    lastPage: 'Letzte Seite',
+    selectAll: 'Alle auswählen',
+    selectRow: 'Zeile auswählen',
+  },
   settings: {
     title: 'Einstellungen',
     background: 'Hintergrund',
@@ -220,9 +351,10 @@ const de: DesktopLabels = {
 
 export const locales: Record<string, DesktopLabels> = { en, tr, de };
 
-export type LabelOverrides = Partial<Omit<DesktopLabels, 'settings' | 'iconSizes'>> & {
+export type LabelOverrides = Partial<Omit<DesktopLabels, 'settings' | 'iconSizes' | 'ui'>> & {
   settings?: Partial<DesktopLabels['settings']>;
   iconSizes?: Partial<DesktopLabels['iconSizes']>;
+  ui?: Partial<UiLabels>;
 };
 
 export function detectLocale(): string {
@@ -237,6 +369,7 @@ export function resolveLabels(locale: string, overrides?: LabelOverrides): Deskt
     ...base,
     ...overrides,
     iconSizes: { ...base.iconSizes, ...overrides.iconSizes },
+    ui: { ...base.ui, ...overrides.ui },
     settings: { ...base.settings, ...overrides.settings },
   } as DesktopLabels;
 }

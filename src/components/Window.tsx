@@ -4,11 +4,12 @@ import {
   memo,
   useEffect,
   useRef,
+  useState,
   type ErrorInfo,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from 'react';
-import { WindowContext, useDesktopConfig, useDesktopController, useDesktopState, type WindowButton } from '../context';
+import { WindowContext, WindowLayerContext, useDesktopConfig, useDesktopController, useDesktopState, type WindowButton } from '../context';
 import type { DesktopController } from '../store/desktop-store';
 import type { Bounds, MenuEntry, Size, WindowState } from '../types';
 import { clamp, cx, keepReachable } from '../utils';
@@ -113,6 +114,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
   const workspaces = useDesktopState((s) => s.preferences.workspaces, Object.is);
   const buttonSide = useDesktopState((s) => s.preferences.buttonSide, Object.is);
   const ref = useRef<HTMLDivElement>(null);
+  const [layer, setLayer] = useState<HTMLDivElement | null>(null);
 
   // Move keyboard focus into the window when it becomes the focused one.
   useEffect(() => {
@@ -354,6 +356,7 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
       </div>
       <div className={cx('xbd-window__body', w.bare && 'is-bare')}>
         <WindowContext.Provider value={id}>
+          <WindowLayerContext.Provider value={layer}>
           <WindowErrorBoundary key={w.generation} message={labels.appCrashed} reloadLabel={labels.reload} onReload={() => api.reloadWindow(id)}>
             <Suspense
               fallback={
@@ -366,8 +369,10 @@ export const WindowFrame = memo(function WindowFrame({ id, z }: WindowFrameProps
               <WindowContent w={w} />
             </Suspense>
           </WindowErrorBoundary>
+          </WindowLayerContext.Provider>
         </WindowContext.Provider>
       </div>
+      <div ref={setLayer} className="xbd-window__layer" />
       {interactive && w.resizable && !w.maximized &&
         EDGES.map((edge) => <div key={edge} className={`xbd-window__resize xbd-window__resize--${edge}`} onPointerDown={onResizePointerDown(edge)} />)}
     </div>

@@ -695,3 +695,95 @@
   background: var(--xbd-hover-bg);
   font-size: 12px;
 }
+
+/* ------------------------------- bileşenler ------------------------------ */
+.demo-gallery__title {
+  margin: 0 0 16px;
+  font-size: 20px;
+}
+.demo-gallery__section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.demo-gallery__section h3 {
+  margin: 0;
+  color: var(--xbd-muted-fg);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.demo-gallery__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 520px;
+}
+.demo-gallery__toolbar {
+  margin-bottom: 12px;
+}
+.demo-gallery__note {
+  margin: 10px 0 0;
+  color: var(--xbd-muted-fg);
+  font-size: 12.5px;
+}
+.demo-gallery__dl {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+.demo-gallery__dl dt {
+  color: var(--xbd-muted-fg);
+}
+.demo-gallery__dl dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.demo-gallery__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 560px;
+}
+.demo-gallery__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+.demo-gallery__kpi {
+  font-size: 22px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------- profil -------------------------------- */
+.demo-profile__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.demo-profile__header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.demo-profile__header p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 0;
+  color: var(--xbd-muted-fg);
+}
+.demo-profile__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 560px;
+}
+.demo-profile__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
